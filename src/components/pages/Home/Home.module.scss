@@ -1,0 +1,67 @@
+@import './../../../vars.scss';
+
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+}
+
+.titleBox {
+  align-self: center;
+  width: 100%;
+  max-width: 1250px;
+  display: flex;
+  padding: 0 3rem;
+  min-height: 40rem;
+  gap: 5rem;
+
+  &__left {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  &__title {
+    font-size: $fs-large * 1.9;
+    color: $navy-dark;
+    font-weight: 700;
+
+    @media screen and (min-width: $bp-900) {
+      font-size: $fs-large * 2;
+    }
+  }
+
+  &__text {
+    font-size: $fs-medium;
+    color: rgba($navy-light, 0.75);
+  }
+
+  &__btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: $fs-medium;
+    align-self: flex-start;
+    color: $navy-dark;
+    font-weight: 600;
+  }
+
+  &__right {
+    display: none;
+    width: 100%;
+    @media screen and (min-width: $bp-900) {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  &__img {
+    width: 100%;
+    min-width: 35rem;
+    max-width: 42.5rem;
+    border-radius: 3px;
+  }
+}

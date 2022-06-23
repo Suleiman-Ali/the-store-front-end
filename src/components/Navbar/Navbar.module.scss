@@ -1,0 +1,109 @@
+@import './../../vars.scss';
+
+.navbar {
+  z-index: 1000;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 3rem;
+  position: relative;
+
+  &__title {
+    font-size: $fs-large * 1.5;
+    color: $navy-dark;
+  }
+
+  &__links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  &__link {
+    font-size: $fs-medium;
+    color: $navy-light;
+  }
+
+  &__boxes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  &__box {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  &__icon {
+    font-size: $fs-small * 2.65;
+    color: $navy-dark;
+  }
+
+  &__boxLink {
+    font-size: $fs-medium;
+    color: $navy-dark;
+  }
+
+  &__toggle {
+    font-size: $fs-large * 1.75;
+    color: $navy-dark;
+    cursor: pointer;
+  }
+
+  &__model {
+    background-color: white;
+    position: absolute;
+    top: 8.5rem;
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    z-index: 1000;
+    padding: 1rem;
+  }
+
+  &__modelLinks {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__modelLink {
+    font-size: $fs-medium;
+    color: $navy-light;
+    padding: 1.5rem 3rem;
+  }
+
+  &__modelBoxes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+  }
+
+  &__modelBox {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__modelIcon {
+    font-size: $fs-small * 2.5;
+    color: $navy-dark;
+  }
+
+  &__modelBoxLink {
+    font-size: $fs-medium;
+    color: $navy-dark;
+  }
+}

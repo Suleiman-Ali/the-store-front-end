@@ -1,0 +1,61 @@
+@import './../../../vars.scss';
+
+.about {
+  display: flex;
+  flex-direction: column;
+  gap: 7.5rem;
+}
+
+.main {
+  max-width: 1250px;
+  align-self: center;
+  padding: 0 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2.5rem;
+
+  @media screen and (min-width: $bp-900) {
+    flex-direction: row;
+  }
+
+  &__left {
+    width: 100%;
+    max-height: 500px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+  }
+
+  &__img {
+    width: 100%;
+    border-radius: 3px;
+  }
+
+  &__right {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  &__title {
+    font-size: $fs-large * 1.5;
+    color: $navy-dark;
+
+    @media screen and (min-width: $bp-900) {
+      font-size: $fs-large * 1.75;
+    }
+  }
+
+  &__text {
+    font-size: $fs-small;
+    color: rgba($navy-light, 0.75);
+
+    @media screen and (min-width: $bp-900) {
+      font-size: $fs-medium;
+    }
+  }
+}

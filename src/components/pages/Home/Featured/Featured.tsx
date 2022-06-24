@@ -15,7 +15,9 @@ function Featured({ styles }: FeaturedProps): JSX.Element {
       <p className={styles.featured__title}>Featured Products</p>
       <div className={styles.featured__products}>
         {threeProducts.map((product, index) => (
-          <div
+          <Link
+            to={`/product/${product._id}`}
+            state={product}
             className={`${styles.featured__product} ${
               index === 2 && styles.featured__lastProduct
             }`}
@@ -30,7 +32,7 @@ function Featured({ styles }: FeaturedProps): JSX.Element {
               <p className={styles.featured__productTitle}>{product.name}</p>
               <p className={styles.featured__productPrice}>{product.price}</p>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
       <Link className={styles.featured__btn} to="/products">

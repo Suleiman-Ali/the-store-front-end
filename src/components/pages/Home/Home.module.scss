@@ -3,7 +3,7 @@
 .home {
   display: flex;
   flex-direction: column;
-  gap: 5rem;
+  gap: 7.5rem;
 }
 
 .titleBox {
@@ -187,7 +187,7 @@
 
   &__message {
     font-size: $fs-small;
-    color: $navy-dark;
+    color: rgba($navy-light, 0.75);
 
     @media screen and (min-width: $bp-900) {
       font-size: $fs-medium;
@@ -243,7 +243,7 @@
 
   &__cardMessage {
     font-size: $fs-small;
-    color: $navy-dark;
+    color: rgba($navy-light, 0.75);
     text-align: center;
   }
 }

@@ -53,7 +53,7 @@
     width: 100%;
     @media screen and (min-width: $bp-900) {
       display: flex;
-      justify-content: center;
+      justify-content: flex-end;
       align-items: center;
     }
   }
@@ -63,5 +63,187 @@
     min-width: 35rem;
     max-width: 42.5rem;
     border-radius: 3px;
+  }
+}
+
+.featured {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+  padding: 5rem 3rem;
+  background-color: #f1f5f8;
+
+  @media screen and (min-width: $bp-600) {
+    gap: 5rem;
+  }
+
+  &__title {
+    font-size: $fs-large * 1.25;
+    color: $navy-dark;
+    font-weight: 600;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-large * 1.6;
+    }
+  }
+
+  &__products {
+    max-width: 1250px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+
+    @media screen and (min-width: $bp-600) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media screen and (min-width: $bp-900) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  &__product {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__lastProduct {
+    @media screen and (min-width: $bp-600) and (max-width: $bp-900) {
+      grid-column: span 2;
+    }
+  }
+
+  &__productImg {
+    width: 100%;
+    border-radius: 3px;
+  }
+
+  &__productBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__productTitle {
+    font-size: $fs-small;
+    font-weight: 500;
+    color: $navy-dark;
+  }
+
+  &__productPrice {
+    font-size: $fs-small;
+    font-weight: 500;
+    color: $navy-dark;
+  }
+
+  &__btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: $fs-small;
+    color: $navy-dark;
+    font-weight: 600;
+  }
+}
+
+.aboutUs {
+  align-self: center;
+  max-width: 1250px;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+
+  @media screen and (min-width: $bp-900) {
+    gap: 5rem;
+  }
+
+  &__titleBox {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+
+    @media screen and (min-width: $bp-900) {
+      flex-direction: row;
+    }
+  }
+
+  &__title {
+    font-size: $fs-large * 1.25;
+    color: $navy-dark;
+    font-weight: 600;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-large * 1.6;
+      flex: 100%;
+    }
+  }
+
+  &__message {
+    font-size: $fs-small;
+    color: $navy-dark;
+
+    @media screen and (min-width: $bp-900) {
+      font-size: $fs-medium;
+    }
+  }
+
+  &__cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+
+    @media screen and (min-width: $bp-600) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media screen and (min-width: $bp-900) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  &__card {
+    border-radius: 3px;
+    padding: 5rem 1rem;
+    background-color: #f1f5f8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+
+    @media screen and (min-width: $bp-900) {
+      padding: 5rem 2rem;
+    }
+  }
+
+  &__lastCard {
+    @media screen and (min-width: $bp-600) and (max-width: $bp-900) {
+      grid-column: span 2;
+      padding: 5rem;
+    }
+  }
+
+  &__cardIcon {
+    font-size: $fs-large * 2;
+    color: $navy-dark;
+  }
+
+  &__cardTitle {
+    font-size: $fs-large;
+    color: $navy-dark;
+    font-weight: 500;
+  }
+
+  &__cardMessage {
+    font-size: $fs-small;
+    color: $navy-dark;
+    text-align: center;
   }
 }

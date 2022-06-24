@@ -1,6 +1,8 @@
 @import './../../vars.scss';
 
 .navbar {
+  align-self: center;
+  max-width: 1250px;
   z-index: 1000;
   width: 100%;
   display: flex;

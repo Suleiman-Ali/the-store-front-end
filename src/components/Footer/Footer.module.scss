@@ -1,0 +1,12 @@
+@import './../../vars.scss';
+
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: #212121;
+  color: white;
+  font-size: $fs-medium;
+  padding: 2.5rem 1rem;
+}

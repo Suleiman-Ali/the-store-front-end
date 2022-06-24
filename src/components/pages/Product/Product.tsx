@@ -1,8 +1,8 @@
+import Footer from '../../Footer/Footer';
+import Navbar from '../../Navbar/Navbar';
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ProductType } from '../../../data';
-import Footer from '../../Footer/Footer';
-import Navbar from '../../Navbar/Navbar';
 import styles from './Product.module.scss';
 
 function Product(): JSX.Element {
@@ -61,7 +61,7 @@ function Product(): JSX.Element {
             <div className={styles.product__detailBox}>
               <p className={styles.product__intro}>Available: </p>
               <p className={styles.product__available}>
-                {product.available.toString().toUpperCase()}
+                {product.available === true ? 'YES' : 'NO'}
               </p>
             </div>
 

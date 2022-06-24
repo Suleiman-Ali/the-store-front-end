@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import Context from '../../context';
 import styles from './Navbar.module.scss';
 
 function Navbar(): JSX.Element {
+  const { user } = useContext(Context);
   const [isBigNav, setIsBigNav] = useState<boolean>(window.innerWidth >= 900);
   const [model, setModel] = useState<boolean>(false);
 
@@ -45,9 +47,18 @@ function Navbar(): JSX.Element {
             <i className={`bi bi-cart-fill ${styles.navbar__icon}`} />
             <p className={styles.navbar__boxLink}>Cart</p>
           </Link>
-          <Link className={styles.navbar__box} to="/login">
-            <i className={`bi bi-person-plus-fill ${styles.navbar__icon}`} />
-            <p className={styles.navbar__boxLink}>Login</p>
+          <Link
+            className={styles.navbar__box}
+            to={`${user ? `/user/${user._id}` : '/login'}`}
+          >
+            <i
+              className={`bi ${
+                user ? 'bi-person-fill' : 'bi-person-plus-fill'
+              }  ${styles.navbar__icon}`}
+            />
+            <p className={styles.navbar__boxLink}>
+              {user ? user.name : 'Login'}
+            </p>
           </Link>
         </div>
       )}
@@ -94,9 +105,6 @@ function Navbar(): JSX.Element {
       )}
     </nav>
   );
-}
-{
-  /* <i className={`bi bi-person-fill`} /> */
 }
 
 export default Navbar;

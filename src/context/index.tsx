@@ -1,9 +1,11 @@
 import { createContext, ReactNode, useEffect, useState } from 'react';
-import { ProductType } from '../data';
+import { getUser, ProductType, UserType } from '../data';
 import api from '../api';
 
 interface ContextValuesTypes {
   products: ProductType[];
+  user: UserType | null;
+  userSetter: (user: UserType) => void;
 }
 
 interface ContextProviderProps {
@@ -17,6 +19,9 @@ export function ContextProvider({
   children,
 }: ContextProviderProps): JSX.Element {
   const [products, setProducts] = useState<ProductType[]>([]);
+  const [user, setUser] = useState<UserType | null>(getUser());
+
+  const userSetter = (user: UserType) => setUser(user);
 
   useEffect(() => {
     (async () => {
@@ -25,5 +30,9 @@ export function ContextProvider({
     })();
   }, []);
 
-  return <Context.Provider value={{ products }}>{children}</Context.Provider>;
+  return (
+    <Context.Provider value={{ products, user, userSetter }}>
+      {children}
+    </Context.Provider>
+  );
 }

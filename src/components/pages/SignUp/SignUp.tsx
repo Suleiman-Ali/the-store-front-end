@@ -31,6 +31,12 @@ function SignUp(): JSX.Element {
       password: passwordText,
     });
 
+    const config = {
+      headers: { 'x-auth-token': token as string },
+    };
+
+    await api.post('/carts', {}, config);
+
     userSetter(userObj);
     localStorage.setItem('JWT_TOKEN', token);
     navigate('/');

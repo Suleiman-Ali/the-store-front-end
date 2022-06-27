@@ -8,7 +8,7 @@ interface FeaturedProps {
 
 function Featured({ styles }: FeaturedProps): JSX.Element {
   const { products } = useContext(Context);
-  const threeProducts = products.slice(0, 4);
+  const threeProducts = products.slice(0, 3);
 
   return (
     <div className={styles.featured}>
@@ -30,7 +30,7 @@ function Featured({ styles }: FeaturedProps): JSX.Element {
             />
             <div className={styles.featured__productBox}>
               <p className={styles.featured__productTitle}>{product.name}</p>
-              <p className={styles.featured__productPrice}>{product.price}</p>
+              <p className={styles.featured__productPrice}>${product.price}</p>
             </div>
           </Link>
         ))}

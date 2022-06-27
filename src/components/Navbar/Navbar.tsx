@@ -1,22 +1,16 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import Context from '../../context';
+import { getUserTo, UserType } from '../../data';
 import styles from './Navbar.module.scss';
 
 function Navbar(): JSX.Element {
-  const { user } = useContext(Context);
-  const [isBigNav, setIsBigNav] = useState<boolean>(window.innerWidth >= 900);
+  const { user, isWindowOver1000, cart } = useContext(Context);
   const [model, setModel] = useState<boolean>(false);
 
   useEffect(() => {
-    const resizeHandler = () => {
-      setModel(false);
-      if (window.innerWidth >= 900) setIsBigNav(true);
-      else setIsBigNav(false);
-    };
-    window.addEventListener<'resize'>('resize', resizeHandler);
-    return () => window.removeEventListener<'resize'>('resize', resizeHandler);
-  }, []);
+    setModel(false);
+  }, [isWindowOver1000]);
 
   return (
     <nav className={styles.navbar}>
@@ -24,7 +18,7 @@ function Navbar(): JSX.Element {
         The Store
       </Link>
 
-      {isBigNav && (
+      {isWindowOver1000 && (
         <div className={styles.navbar__links}>
           <NavLink className={styles.navbar__link} to="/">
             Home
@@ -41,20 +35,20 @@ function Navbar(): JSX.Element {
         </div>
       )}
 
-      {isBigNav && (
+      {isWindowOver1000 && (
         <div className={styles.navbar__boxes}>
           <Link className={styles.navbar__box} to="/cart">
             <i className={`bi bi-cart-fill ${styles.navbar__icon}`} />
             <p className={styles.navbar__boxLink}>Cart</p>
+            {cart && cart.products && cart.products.length > 0 && (
+              <p className={styles.navbar__sizeOfCart}>
+                {cart?.products.length}
+              </p>
+            )}
           </Link>
-          <Link
-            className={styles.navbar__box}
-            to={`${user ? `/user/${user._id}` : '/login'}`}
-          >
+          <Link className={styles.navbar__box} to={getUserTo(user).to}>
             <i
-              className={`bi ${
-                user ? 'bi-person-fill' : 'bi-person-plus-fill'
-              }  ${styles.navbar__icon}`}
+              className={`bi ${getUserTo(user).icon}  ${styles.navbar__icon}`}
             />
             <p className={styles.navbar__boxLink}>
               {user ? user.name : 'Login'}
@@ -63,7 +57,7 @@ function Navbar(): JSX.Element {
         </div>
       )}
 
-      {!isBigNav && (
+      {!isWindowOver1000 && (
         <i
           className={`bi ${model ? 'bi-x' : 'bi-list'} ${
             styles.navbar__toggle
@@ -93,12 +87,22 @@ function Navbar(): JSX.Element {
             <Link className={styles.navbar__modelBox} to="/cart">
               <i className={`bi bi-cart-fill ${styles.navbar__modelIcon}`} />
               <p className={styles.navbar__modelBoxLink}>Cart</p>
+              {cart && cart.products && cart.products.length > 0 && (
+                <p className={styles.navbar__sizeOfCart}>
+                  {cart?.products.length}
+                </p>
+              )}
             </Link>
-            <Link className={styles.navbar__modelBox} to="/login">
+
+            <Link className={styles.navbar__modelBox} to={getUserTo(user).to}>
               <i
-                className={`bi bi-person-plus-fill ${styles.navbar__modelIcon}`}
+                className={`bi ${getUserTo(user).icon}  ${
+                  styles.navbar__modelIcon
+                }`}
               />
-              <p className={styles.navbar__modelBoxLink}>Login</p>
+              <p className={styles.navbar__modelBoxLink}>
+                {user ? user.name : 'Login'}
+              </p>
             </Link>
           </div>
         </div>

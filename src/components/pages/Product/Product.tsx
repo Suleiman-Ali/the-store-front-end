@@ -1,11 +1,13 @@
 import Footer from '../../Footer/Footer';
 import Navbar from '../../Navbar/Navbar';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ProductType } from '../../../data';
 import styles from './Product.module.scss';
+import Context from '../../../context';
 
 function Product(): JSX.Element {
+  const { addToCart } = useContext(Context);
   const { state } = useLocation();
   const product = state as ProductType;
   const [selectedImage, setSelectedImage] = useState<string>(
@@ -13,6 +15,17 @@ function Product(): JSX.Element {
   );
   const [selectedColor, setSelectedColor] = useState<string>(product.colors[0]);
   const [selectedSize, setSelectedSize] = useState<string>(product.sizes[0]);
+
+  const addToCartHandler = () => {
+    const product_id = product._id;
+    const name = product.name;
+    const price = product.price;
+    const size = selectedSize;
+    const color = selectedColor;
+    const picture = selectedImage;
+    const order = { product_id, name, price, size, color, picture };
+    addToCart(order);
+  };
 
   return (
     <div className={styles.product}>
@@ -50,7 +63,7 @@ function Product(): JSX.Element {
 
           <div className={styles.product__details}>
             <h1 className={styles.product__name}>{product.name}</h1>
-            <p className={styles.product__price}>{product.price}</p>
+            <p className={styles.product__price}>${product.price}</p>
             <p className={styles.product__description}>
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id
               beatae deserunt praesentium dolorum ad et sunt voluptas, doloribus
@@ -102,7 +115,7 @@ function Product(): JSX.Element {
               </div>
             </div>
 
-            <button className={styles.product__btn}>
+            <button className={styles.product__btn} onClick={addToCartHandler}>
               Add To Cart
               <i
                 className={`bi bi-cart-plus-fill ${styles.product__btnIcon}`}

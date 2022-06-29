@@ -2,8 +2,12 @@ import { FormEventHandler, MutableRefObject, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Context from '../../../context';
 import { ProductType } from '../../../data';
+import AddButton from '../../AddButton/AddButton';
 import Footer from '../../Footer/Footer';
+import InputReffed from '../../InputReffed/InputReffed';
 import Navbar from '../../Navbar/Navbar';
+import SelectReffed from '../../SelectReffed/SelectReffed';
+import TextareaReffed from '../../TextareaReffed/TextareaReffed';
 import styles from './AddProduct.module.scss';
 
 function AddProduct(): JSX.Element {
@@ -51,173 +55,97 @@ function AddProduct(): JSX.Element {
       pictures.current.value =
         '';
 
-    console.log(product);
-
     addProduct(product as ProductType);
     navigate('/products');
   };
 
   return (
-    <div className={styles.addProduct}>
+    <div className={styles.add}>
       <Navbar />
-      <form className={styles.addProduct__form} onSubmit={submitHandler}>
-        <div className={styles.addProduct__formBox}>
-          <label className={styles.addProduct__label} htmlFor="name">
-            Name
-          </label>
-          <input
-            type="text"
-            id="name"
-            className={styles.addProduct__input}
-            placeholder="Name.."
-            max={30}
-            required
-            ref={name}
+      <form className={styles.add__form} onSubmit={submitHandler}>
+        <InputReffed
+          styles={styles}
+          ref={name}
+          text="Name"
+          placeHolder="Name.."
+        />
+
+        <div className={styles.add__formBox2}>
+          <InputReffed
+            styles={styles}
+            ref={price}
+            text="Price"
+            placeHolder="Price.."
+            min={1}
+            max={999999}
+            type="number"
+          />
+
+          <SelectReffed
+            styles={styles}
+            ref={available}
+            text="Available"
+            items={[
+              {
+                _id: 'true',
+                name: 'True',
+              },
+              {
+                _id: 'false',
+                name: 'False',
+              },
+            ]}
           />
         </div>
 
-        <div className={styles.addProduct__formBox2}>
-          <div className={styles.addProduct__formBox}>
-            <label className={styles.addProduct__label} htmlFor="price">
-              Price
-            </label>
-            <input
-              type="number"
-              id="price"
-              className={styles.addProduct__input}
-              placeholder="Price.."
-              max={999999}
-              min={1}
-              required
-              ref={price}
-            />
-          </div>
-
-          <div className={styles.addProduct__formBox}>
-            <label className={styles.addProduct__label} htmlFor="available">
-              Available
-            </label>
-            <select
-              id="available"
-              className={styles.addProduct__select}
-              required
-              ref={available}
-            >
-              <option value="true" className={styles.addProduct__option}>
-                True
-              </option>
-              <option value="false" className={styles.addProduct__option}>
-                False
-              </option>
-            </select>
-          </div>
-        </div>
-
-        <div className={styles.addProduct__formBox2}>
-          <div className={styles.addProduct__formBox}>
-            <label className={styles.addProduct__label} htmlFor="brand">
-              Brand
-            </label>
-            <select
-              id="brand"
-              className={styles.addProduct__select}
-              required
-              ref={brand}
-            >
-              {brands.map((brand) => (
-                <option
-                  value={brand._id}
-                  className={styles.addProduct__option}
-                  key={brand._id}
-                >
-                  {brand.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className={styles.addProduct__formBox}>
-            <label className={styles.addProduct__label} htmlFor="category">
-              Category
-            </label>
-            <select
-              id="category"
-              className={styles.addProduct__select}
-              required
-              ref={category}
-            >
-              {categories.map((category) => (
-                <option
-                  value={category._id}
-                  className={styles.addProduct__option}
-                  key={category._id}
-                >
-                  {category.name}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-        <div className={styles.addProduct__formBox}>
-          <label className={styles.addProduct__label} htmlFor="description">
-            Description
-          </label>
-          <textarea
-            id="description"
-            className={styles.addProduct__textarea}
-            placeholder="Description.."
-            maxLength={250}
-            required
-            ref={description}
+        <div className={styles.add__formBox2}>
+          <SelectReffed
+            styles={styles}
+            ref={brand}
+            text="Brand"
+            items={brands}
+          />
+          <SelectReffed
+            styles={styles}
+            ref={category}
+            text="Category"
+            items={categories}
           />
         </div>
 
-        <div className={styles.addProduct__formBox}>
-          <label className={styles.addProduct__label} htmlFor="color">
-            Colors
-          </label>
-          <textarea
-            id="color"
-            className={styles.addProduct__textarea}
-            placeholder="Colors names separated by commas.."
-            maxLength={50}
-            required
-            ref={color}
-          />
-        </div>
+        <TextareaReffed
+          styles={styles}
+          ref={description}
+          text="Description"
+          placeholder="Description.."
+          maxLength={500}
+        />
 
-        <div className={styles.addProduct__formBox}>
-          <label className={styles.addProduct__label} htmlFor="size">
-            Sizes
-          </label>
-          <textarea
-            id="size"
-            className={styles.addProduct__textarea}
-            placeholder="Sizes names separated by commas.."
-            maxLength={50}
-            required
-            ref={size}
-          />
-        </div>
+        <TextareaReffed
+          styles={styles}
+          ref={color}
+          text="Colors"
+          placeholder="Colors names separated by commas.."
+          maxLength={100}
+        />
 
-        <div className={styles.addProduct__formBox}>
-          <label className={styles.addProduct__label} htmlFor="pictures">
-            Pictures
-          </label>
-          <textarea
-            id="pictures"
-            className={styles.addProduct__textarea}
-            placeholder="Pictures links separated by commas.."
-            maxLength={750}
-            required
-            ref={pictures}
-          />
-        </div>
+        <TextareaReffed
+          styles={styles}
+          ref={size}
+          text="Sizes"
+          placeholder="Sizes names separated by commas.."
+          maxLength={100}
+        />
 
-        <button type="submit" className={styles.addProduct__btn}>
-          Add
-          <i className={`bi bi-plus-circle-fill ${styles.addProduct__icon}`} />
-        </button>
+        <TextareaReffed
+          styles={styles}
+          ref={pictures}
+          text="Pictures"
+          placeholder="Pictures names separated by commas.."
+          maxLength={1000}
+        />
+
+        <AddButton buttonCls={styles.add__btn} iconCls={styles.add__icon} />
       </form>
       <Footer />
     </div>

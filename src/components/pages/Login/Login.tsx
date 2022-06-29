@@ -1,31 +1,22 @@
-import jwtDecode from 'jwt-decode';
 import { FormEventHandler, MutableRefObject, useContext, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import api from '../../../api';
 import Context from '../../../context';
 import Footer from '../../Footer/Footer';
 import Navbar from '../../Navbar/Navbar';
 import styles from './Login.module.scss';
 
 function Login(): JSX.Element {
-  const { userSetter } = useContext(Context);
+  const { login } = useContext(Context);
   const navigate = useNavigate();
   const email = useRef() as MutableRefObject<HTMLInputElement>;
   const password = useRef() as MutableRefObject<HTMLInputElement>;
 
-  const submitHandler: FormEventHandler<HTMLFormElement> = async (e) => {
+  const submitHandler: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     const emailText = email.current.value;
     const passwordText = password.current.value;
     email.current.value = password.current.value = '';
-
-    const { data: token } = await api.post('/auth', {
-      email: emailText,
-      password: passwordText,
-    });
-
-    userSetter(jwtDecode(token));
-    localStorage.setItem('JWT_TOKEN', token);
+    login(emailText, passwordText);
     navigate('/');
   };
 

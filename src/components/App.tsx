@@ -1,5 +1,6 @@
+import { useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ContextProvider } from '../context';
+import Context from '../context';
 import About from './pages/About/About';
 import AddBrand from './pages/AddBrand/AddBrand';
 import AddCategory from './pages/AddCategory/AddCategory';
@@ -17,29 +18,47 @@ import SignUp from './pages/SignUp/SignUp';
 import User from './pages/User/User';
 
 function App() {
+  const { user } = useContext(Context);
+
   return (
     <div className="app">
-      <ContextProvider>
-        <Router>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/product/:id" element={<Product />} />
-            <Route path="/contact" element={<ContactUs />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/sign-up" element={<SignUp />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/cart" element={<Cart />} />
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/product/:id" element={<Product />} />
+
+          {!user && <Route path="/login" element={<Login />} />}
+          {!user && <Route path="/sign-up" element={<SignUp />} />}
+
+          {user && !user.isAdmin && (
             <Route path="/user/:id" element={<User />} />
+          )}
+          {user && !user.isAdmin && (
+            <Route path="/contact" element={<ContactUs />} />
+          )}
+          {user && !user.isAdmin && <Route path="/cart" element={<Cart />} />}
+
+          {user && user.isAdmin && (
             <Route path="admin/:id" element={<Admin />} />
+          )}
+          {user && user.isAdmin && (
             <Route path="/add-category" element={<AddCategory />} />
+          )}
+          {user && user.isAdmin && (
             <Route path="/add-brand" element={<AddBrand />} />
+          )}
+          {user && user.isAdmin && (
             <Route path="/add-product" element={<AddProduct />} />
+          )}
+          {user && user.isAdmin && (
             <Route path="/edit-product" element={<EditProduct />} />
-            <Route path="*" element={<Notfound />} />
-          </Routes>
-        </Router>
-      </ContextProvider>
+          )}
+
+          <Route path="*" element={<Notfound />} />
+        </Routes>
+      </Router>
     </div>
   );
 }

@@ -7,7 +7,7 @@ import styles from './Product.module.scss';
 import Context from '../../../context';
 
 function Product(): JSX.Element {
-  const { addToCart } = useContext(Context);
+  const { addToCart, user } = useContext(Context);
   const { state } = useLocation();
   const product = state as ProductType;
   const [selectedImage, setSelectedImage] = useState<string>(
@@ -115,12 +115,17 @@ function Product(): JSX.Element {
               </div>
             </div>
 
-            <button className={styles.product__btn} onClick={addToCartHandler}>
-              Add To Cart
-              <i
-                className={`bi bi-cart-plus-fill ${styles.product__btnIcon}`}
-              ></i>
-            </button>
+            {user && !user.isAdmin && (
+              <button
+                className={styles.product__btn}
+                onClick={addToCartHandler}
+              >
+                Add To Cart
+                <i
+                  className={`bi bi-cart-plus-fill ${styles.product__btnIcon}`}
+                ></i>
+              </button>
+            )}
           </div>
         </div>
       </div>

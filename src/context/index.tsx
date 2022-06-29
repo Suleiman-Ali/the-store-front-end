@@ -11,6 +11,7 @@ import {
   UserType,
 } from '../data';
 import api from '../api';
+import jwtDecode from 'jwt-decode';
 
 interface ContextValuesTypes {
   products: ProductType[];
@@ -20,8 +21,8 @@ interface ContextValuesTypes {
   user: UserType | undefined;
   cart: CartType | undefined;
   isWindowOver1000: boolean;
-  userSetter: (user: UserType) => void;
-  cartSetter: (cart: CartType) => void;
+  signUp: (name: string, email: string, password: string) => void;
+  login: (email: string, password: string) => void;
   addToCart: (order: OrderType) => void;
   deleteFromCart: (id: string) => void;
   clearCart: () => void;
@@ -62,83 +63,36 @@ export function ContextProvider({
   const [user, setUser] = useState<UserType | undefined>();
   const [cart, setCart] = useState<CartType | undefined>();
 
-  const userSetter = (user: UserType) => setUser(user);
-  const cartSetter = (cart: CartType) => setCart(cart);
+  const signUp = async (name: string, email: string, password: string) => {
+    const { data: userObj } = await api.post('/users', {
+      name,
+      email,
+      password,
+    });
 
-  const addToCart = async (order: OrderType) => {
-    if (!cart) return;
+    const { data: token } = await api.post('/auth', {
+      email,
+      password,
+    });
 
-    const token = localStorage.getItem('JWT_TOKEN');
     const config = {
       headers: { 'x-auth-token': token as string },
     };
 
-    const { data: newCart } = await api.put(
-      '/carts/',
-      { ...cart, products: [...cart.products, order] },
-      config
-    );
-    setCart(newCart);
+    await api.post('/carts', {}, config);
+
+    setUser(userObj);
+    localStorage.setItem('JWT_TOKEN', token);
   };
 
-  const deleteFromCart = async (id: string) => {
-    if (!cart) return;
+  const login = async (email: string, password: string) => {
+    const { data: token } = await api.post('/auth', {
+      email,
+      password,
+    });
 
-    const token = localStorage.getItem('JWT_TOKEN');
-    const config = {
-      headers: { 'x-auth-token': token as string },
-    };
-
-    const { data: newCart } = await api.put(
-      '/carts/',
-      {
-        ...cart,
-        products: [...cart.products.filter((order) => order._id !== id)],
-      },
-      config
-    );
-    setCart(newCart);
-  };
-
-  const clearCart = async () => {
-    if (!cart) return;
-
-    const token = localStorage.getItem('JWT_TOKEN');
-    const config = {
-      headers: { 'x-auth-token': token as string },
-    };
-
-    const { data: newCart } = await api.put(
-      '/carts',
-      {
-        ...cart,
-        products: [],
-      },
-      config
-    );
-    setCart(newCart);
-  };
-
-  const checkout = async (orders: RealOrderType[]) => {
-    if (!user) return;
-
-    const token = localStorage.getItem('JWT_TOKEN');
-    const config = {
-      headers: { 'x-auth-token': token as string },
-    };
-
-    for (let order of orders) await api.post('/orders', order, config);
-    const { data: newCart } = await api.put(
-      '/carts',
-      {
-        ...cart,
-        products: [],
-      },
-      config
-    );
-    const { data: newOrders } = await api.get(`/orders/${user._id}`, config);
-    setCart(newCart);
-    setOrders(newOrders);
+    setUser(jwtDecode(token));
+    localStorage.setItem('JWT_TOKEN', token);
   };
 
   const logout = () => {
@@ -146,13 +100,121 @@ export function ContextProvider({
     setUser(undefined);
   };
 
+  const addToCart = async (order: OrderType) => {
+    if (!cart) return;
+
+    const oldCart = { ...cart };
+    const newCart = { ...cart, products: [...cart.products, order] };
+    setCart(newCart);
+
+    const token = localStorage.getItem('JWT_TOKEN');
+    const config = {
+      headers: { 'x-auth-token': token as string },
+    };
+
+    try {
+      const { data } = await api.put('/carts/', newCart, config);
+      setCart(data);
+    } catch (e) {
+      setCart(oldCart);
+    }
+  };
+
+  const deleteFromCart = async (id: string) => {
+    if (!cart) return;
+
+    const oldCart = { ...cart };
+    const newCart = {
+      ...cart,
+      products: [...cart.products.filter((order) => order._id !== id)],
+    };
+    setCart(newCart);
+
+    const token = localStorage.getItem('JWT_TOKEN');
+    const config = {
+      headers: { 'x-auth-token': token as string },
+    };
+
+    try {
+      const { data } = await api.put('/carts/', newCart, config);
+      setCart(data);
+    } catch (e) {
+      setCart(oldCart);
+    }
+  };
+
+  const clearCart = async () => {
+    if (!cart) return;
+
+    const oldCart = { ...cart };
+    const newCart = {
+      ...cart,
+      products: [],
+    };
+    setCart(newCart);
+
+    const token = localStorage.getItem('JWT_TOKEN');
+    const config = {
+      headers: { 'x-auth-token': token as string },
+    };
+
+    try {
+      const { data } = await api.put('/carts', newCart, config);
+      setCart(data);
+    } catch (e) {
+      setCart(oldCart);
+    }
+  };
+
+  const checkout = async (ordersInput: RealOrderType[]) => {
+    if (!user || !cart) return;
+
+    const token = localStorage.getItem('JWT_TOKEN');
+    const config = {
+      headers: { 'x-auth-token': token as string },
+    };
+
+    const oldCart = { ...cart };
+    const newCart = {
+      ...cart,
+      products: [],
+    };
+    setCart(newCart);
+    try {
+      const { data } = await api.put('/carts', newCart, config);
+      setCart(data);
+    } catch (e) {
+      setCart(oldCart);
+    }
+
+    const oldOrders = [...orders];
+    const newOrders = [...orders, ...ordersInput];
+    setOrders(newOrders);
+
+    try {
+      for (let order of ordersInput) await api.post('/orders', order, config);
+      const { data } = await api.get(`/orders/${user._id}`, config);
+      setOrders(data);
+    } catch (e) {
+      setOrders(oldOrders);
+    }
+  };
+
   const cancelOrder = async (id: string) => {
     const token = localStorage.getItem('JWT_TOKEN');
     const config = {
       headers: { 'x-auth-token': token as string },
     };
-    await api.delete(`/orders/${id}`, config);
-    setOrders((orders) => orders.filter((order) => order._id !== id));
+
+    const oldOrders = [...orders];
+    const newOrders = orders.filter((order) => order._id !== id);
+    setOrders(newOrders);
+
+    try {
+      await api.delete(`/orders/${id}`, config);
+    } catch (e) {
+      setOrders(oldOrders);
+    }
   };
 
   const deleteCategory = async (id: string) => {
@@ -160,8 +222,16 @@ export function ContextProvider({
     const config = {
       headers: { 'x-auth-token': token as string },
     };
-    await api.delete(`/categories/${id}`, config);
-    setCategories((categories) => categories.filter((cat) => cat._id !== id));
+
+    const oldCategories = [...categories];
+    const newCategories = categories.filter((cat) => cat._id !== id);
+    setCategories(newCategories);
+
+    try {
+      await api.delete(`/categories/${id}`, config);
+    } catch (e) {
+      setCategories(oldCategories);
+    }
   };
 
   const deleteBrand = async (id: string) => {
@@ -169,8 +239,16 @@ export function ContextProvider({
     const config = {
       headers: { 'x-auth-token': token as string },
     };
-    await api.delete(`/brands/${id}`, config);
-    setBrands((brands) => brands.filter((brand) => brand._id !== id));
+
+    const oldBrands = [...brands];
+    const newBrands = brands.filter((brand) => brand._id !== id);
+    setBrands(newBrands);
+
+    try {
+      await api.delete(`/brands/${id}`, config);
+    } catch (e) {
+      setBrands(oldBrands);
+    }
   };
 
   const addCategory = async (name: string) => {
@@ -200,8 +278,16 @@ export function ContextProvider({
     const config = {
       headers: { 'x-auth-token': token as string },
     };
-    await api.delete(`/products/${id}`, config);
-    setProducts((products) => products.filter((product) => product._id !== id));
+
+    const oldProducts = [...products];
+    const newProducts = products.filter((product) => product._id !== id);
+    setProducts(newProducts);
+
+    try {
+      await api.delete(`/products/${id}`, config);
+    } catch (e) {
+      setProducts(oldProducts);
+    }
   };
 
   const addProduct = async (product: ProductType) => {
@@ -234,9 +320,22 @@ export function ContextProvider({
     const config = {
       headers: { 'x-auth-token': token as string },
     };
-    await api.delete(`/orders/${id}`, config);
-    setAllOrders((orders) => orders.filter((order) => order._id !== id));
+    const oldOrders = [...allOrders];
+    const newOrders = allOrders.filter((order) => order._id !== id);
+    setAllOrders(newOrders);
+
+    try {
+      await api.delete(`/orders/${id}`, config);
+    } catch (e) {
+      setAllOrders(oldOrders);
+    }
   };
+
+  useEffect(() => {
+    const resizeHandler = () => setIsWindowOver900(window.innerWidth >= 999);
+    window.addEventListener<'resize'>('resize', resizeHandler);
+    return () => window.removeEventListener<'resize'>('resize', resizeHandler);
+  }, []);
 
   useEffect(() => {
     setUser(getUser());
@@ -251,13 +350,7 @@ export function ContextProvider({
   }, []);
 
   useEffect(() => {
-    const resizeHandler = () => setIsWindowOver900(window.innerWidth >= 999);
-    window.addEventListener<'resize'>('resize', resizeHandler);
-    return () => window.removeEventListener<'resize'>('resize', resizeHandler);
-  }, []);
-
-  useEffect(() => {
-    if (!user) return;
+    if (!user || (user && user.isAdmin)) return;
     (async () => {
       const token = localStorage.getItem('JWT_TOKEN');
       const config = {
@@ -292,8 +385,7 @@ export function ContextProvider({
         brands,
         user,
         cart,
-        userSetter,
-        cartSetter,
+        signUp,
         isWindowOver1000,
         addToCart,
         deleteFromCart,
@@ -312,6 +404,7 @@ export function ContextProvider({
         allEmails,
         allOrders,
         resolveOrder,
+        login,
       }}
     >
       {children}

@@ -1,44 +1,24 @@
 import { FormEventHandler, MutableRefObject, useContext, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import api from '../../../api';
 import Context from '../../../context';
 import Footer from '../../Footer/Footer';
 import Navbar from '../../Navbar/Navbar';
 import styles from './SingUp.module.scss';
 
 function SignUp(): JSX.Element {
-  const { userSetter } = useContext(Context);
   const navigate = useNavigate();
+  const { signUp } = useContext(Context);
   const name = useRef() as MutableRefObject<HTMLInputElement>;
   const email = useRef() as MutableRefObject<HTMLInputElement>;
   const password = useRef() as MutableRefObject<HTMLInputElement>;
 
-  const submitHandler: FormEventHandler<HTMLFormElement> = async (e) => {
+  const submitHandler: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     const nameText = name.current.value;
     const emailText = email.current.value;
     const passwordText = password.current.value;
     name.current.value = email.current.value = password.current.value = '';
-
-    const { data: userObj } = await api.post('/users', {
-      name: nameText,
-      email: emailText,
-      password: passwordText,
-    });
-
-    const { data: token } = await api.post('/auth', {
-      email: emailText,
-      password: passwordText,
-    });
-
-    const config = {
-      headers: { 'x-auth-token': token as string },
-    };
-
-    await api.post('/carts', {}, config);
-
-    userSetter(userObj);
-    localStorage.setItem('JWT_TOKEN', token);
+    signUp(nameText, emailText, passwordText);
     navigate('/');
   };
 

@@ -106,6 +106,12 @@
     gap: 1rem;
   }
 
+  &__emailBox {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
   &__emailItem {
     width: 100%;
     border-radius: 3px;
@@ -119,6 +125,25 @@
       flex-direction: row;
       justify-content: space-between;
     }
+  }
+
+  &__emailContent {
+    background-color: #f1f5f8;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  &__emailHeader {
+    font-size: $fs-medium;
+    font-weight: 600;
+    color: $navy-dark;
+  }
+
+  &__emailText {
+    font-size: $fs-small;
+    color: $navy-dark;
   }
 
   &__emailProperty {

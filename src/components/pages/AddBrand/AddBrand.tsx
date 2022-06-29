@@ -2,7 +2,9 @@ import { MutableRefObject, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Context from '../../../context';
 import Footer from '../../Footer/Footer';
+import InputReffed from '../../InputReffed/InputReffed';
 import Navbar from '../../Navbar/Navbar';
+import AddButton from '../../AddButton/AddButton';
 import styles from './AddBrand.module.scss';
 
 function AddBrand(): JSX.Element {
@@ -16,29 +18,16 @@ function AddBrand(): JSX.Element {
   };
 
   return (
-    <div className={styles.addBrand}>
+    <div className={styles.add}>
       <Navbar />
-      <form className={styles.addBrand__form} onSubmit={submitHandler}>
-        <div className={styles.addBrand__formBox}>
-          <label htmlFor="brand" className={styles.addBrand__label}>
-            Brand Name
-          </label>
-          <input
-            type="text"
-            name="brand"
-            id="brand"
-            className={styles.addBrand__input}
-            placeholder="Brand.."
-            maxLength={50}
-            required
-            ref={brand}
-          />
-        </div>
-
-        <button type="submit" className={styles.addBrand__btn}>
-          Add
-          <i className={`bi bi-plus-circle-fill ${styles.addBrand__icon}`} />
-        </button>
+      <form className={styles.add__form} onSubmit={submitHandler}>
+        <InputReffed
+          ref={brand}
+          styles={styles}
+          text="Brand Name"
+          placeHolder="Brand.."
+        />
+        <AddButton buttonCls={styles.add__btn} iconCls={styles.add__icon} />
       </form>
       <Footer />
     </div>

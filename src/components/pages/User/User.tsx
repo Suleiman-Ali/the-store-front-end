@@ -1,11 +1,18 @@
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Context from '../../../context';
 import Footer from '../../Footer/Footer';
 import Navbar from '../../Navbar/Navbar';
 import styles from './User.module.scss';
 
 function User(): JSX.Element {
+  const navigate = useNavigate();
   const { user, orders, logout, cancelOrder } = useContext(Context);
+
+  const logoutHandler = () => {
+    logout();
+    navigate('/');
+  };
 
   return (
     <div className={styles.user}>
@@ -22,7 +29,7 @@ function User(): JSX.Element {
           <i
             className={`bi bi-box-arrow-right ${styles.user__logoutIcon}`}
             title="Logout"
-            onClick={logout}
+            onClick={logoutHandler}
           />
         </div>
 

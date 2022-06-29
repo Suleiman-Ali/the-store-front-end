@@ -2,7 +2,9 @@ import { MutableRefObject, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Context from '../../../context';
 import Footer from '../../Footer/Footer';
+import InputReffed from '../../InputReffed/InputReffed';
 import Navbar from '../../Navbar/Navbar';
+import AddButton from '../../AddButton/AddButton';
 import styles from './AddCategory.module.scss';
 
 function AddCategory(): JSX.Element {
@@ -16,29 +18,16 @@ function AddCategory(): JSX.Element {
   };
 
   return (
-    <div className={styles.addCategory}>
+    <div className={styles.add}>
       <Navbar />
-      <form className={styles.addCategory__form} onSubmit={submitHandler}>
-        <div className={styles.addCategory__formBox}>
-          <label htmlFor="category" className={styles.addCategory__label}>
-            Category Name
-          </label>
-          <input
-            type="text"
-            name="category"
-            id="category"
-            className={styles.addCategory__input}
-            placeholder="Category.."
-            maxLength={50}
-            required
-            ref={category}
-          />
-        </div>
-
-        <button type="submit" className={styles.addCategory__btn}>
-          Add
-          <i className={`bi bi-plus-circle-fill ${styles.addCategory__icon}`} />
-        </button>
+      <form className={styles.add__form} onSubmit={submitHandler}>
+        <InputReffed
+          ref={category}
+          styles={styles}
+          text="Category Name"
+          placeHolder="Category.."
+        />
+        <AddButton buttonCls={styles.add__btn} iconCls={styles.add__icon} />
       </form>
       <Footer />
     </div>

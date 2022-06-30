@@ -64,12 +64,7 @@ function Product(): JSX.Element {
           <div className={styles.product__details}>
             <h1 className={styles.product__name}>{product.name}</h1>
             <p className={styles.product__price}>${product.price}</p>
-            <p className={styles.product__description}>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id
-              beatae deserunt praesentium dolorum ad et sunt voluptas, doloribus
-              nemo libero totam maxime numquam fugiat. Accusantium?
-              {/* {product.description} */}
-            </p>
+            <p className={styles.product__description}>{product.description}</p>
 
             <div className={styles.product__detailBox}>
               <p className={styles.product__intro}>Available: </p>

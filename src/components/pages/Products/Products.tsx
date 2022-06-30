@@ -38,6 +38,7 @@ function Products(): JSX.Element {
     setCategory('All');
     setBrand('All');
     setSort('Price/Lowest');
+    setKeyword('');
   };
 
   useEffect(() => {
@@ -90,6 +91,8 @@ function Products(): JSX.Element {
               type="text"
               className={styles.products__input}
               placeholder="Keyword.."
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
             />
             <div className={styles.products__editsBox}>
               <div className={styles.products__outerBox}>
@@ -104,17 +107,29 @@ function Products(): JSX.Element {
                     </Link>
                   )}
                 </div>
-
                 <div className={styles.products__innerBox}>
+                  <p
+                    className={`${styles.products__editItem} ${
+                      f_category === 'All' ? styles.products__selected : ''
+                    }`}
+                    onClick={() => setCategory('All')}
+                  >
+                    All
+                  </p>
                   {categories.map((category) => (
                     <div className={styles.products__editItemBox}>
                       <p
-                        className={styles.products__editItem}
+                        className={`${styles.products__editItem} ${
+                          f_category === category._id
+                            ? styles.products__selected
+                            : ''
+                        }`}
+                        onClick={() => setCategory(category._id)}
                         key={category._id}
                       >
                         {category.name}
                       </p>
-                      {user?.isAdmin && (
+                      {user && user.isAdmin === true && (
                         <i
                           className={`bi bi-x-circle-fill ${styles.products__editItemIcon}`}
                           title="Delete"
@@ -135,12 +150,26 @@ function Products(): JSX.Element {
                   )}
                 </div>
                 <div className={styles.products__innerBox}>
+                  <p
+                    className={`${styles.products__editItem} ${
+                      f_brand === 'All' ? styles.products__selected : ''
+                    }`}
+                    onClick={() => setBrand('All')}
+                  >
+                    All
+                  </p>
                   {brands.map((brand) => (
                     <div className={styles.products__editItemBox}>
-                      <p className={styles.products__editItem} key={brand._id}>
+                      <p
+                        className={`${styles.products__editItem} ${
+                          f_brand === brand._id ? styles.products__selected : ''
+                        }`}
+                        onClick={() => setBrand(brand._id)}
+                        key={brand._id}
+                      >
                         {brand.name}
                       </p>
-                      {user?.isAdmin && (
+                      {user && user.isAdmin === true && (
                         <i
                           className={`bi bi-x-circle-fill ${styles.products__editItemIcon}`}
                           title="Delete"
@@ -154,26 +183,60 @@ function Products(): JSX.Element {
               <div className={styles.products__outerBox}>
                 <p className={styles.products__boxTitle}>Price</p>
                 <div className={styles.products__innerBox}>
-                  <p className={styles.products__priceNumber}>{f_range}</p>
+                  <p className={styles.products__priceNumber}>${f_range}</p>
                   <input
                     type="range"
                     min="0"
                     max="5000"
                     value={f_range}
                     className={styles.products__priceSlider}
+                    onChange={(e) => setRange(+e.target.value)}
                   />
                 </div>
               </div>
               <div className={styles.products__outerBox}>
                 <p className={styles.products__boxTitle}>Sort By</p>
                 <div className={styles.products__innerBox}>
-                  <p className={styles.products__editItem}>Price/Lowest</p>
-                  <p className={styles.products__editItem}>Price/Highest</p>
-                  <p className={styles.products__editItem}>Name/A-Z</p>
-                  <p className={styles.products__editItem}>Name/Z-A</p>
+                  <p
+                    className={`${styles.products__editItem} ${
+                      f_sort === 'Price/Lowest' ? styles.products__selected : ''
+                    }`}
+                    onClick={() => setSort('Price/Lowest')}
+                  >
+                    Price/Lowest
+                  </p>
+                  <p
+                    className={`${styles.products__editItem} ${
+                      f_sort === 'Price/Highest'
+                        ? styles.products__selected
+                        : ''
+                    }`}
+                    onClick={() => setSort('Price/Highest')}
+                  >
+                    Price/Highest
+                  </p>
+                  <p
+                    className={`${styles.products__editItem} ${
+                      f_sort === 'Name/A-Z' ? styles.products__selected : ''
+                    }`}
+                    onClick={() => setSort('Name/A-Z')}
+                  >
+                    Name/A-Z
+                  </p>
+                  <p
+                    className={`${styles.products__editItem} ${
+                      f_sort === 'Name/Z-A' ? styles.products__selected : ''
+                    }`}
+                    onClick={() => setSort('Name/Z-A')}
+                  >
+                    Name/Z-A
+                  </p>
                 </div>
               </div>
-              <button className={styles.products__btnClear}>
+              <button
+                className={styles.products__btnClear}
+                onClick={clearFilters}
+              >
                 Clear Filters
               </button>
             </div>
@@ -346,6 +409,7 @@ function Products(): JSX.Element {
               </div>
             </div>
           )}
+
           <div className={styles.products__products}>
             {filteredProducts.map((product) => (
               <div className={styles.products__productBox}>

@@ -1,21 +1,21 @@
 import { useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Context from '../context';
-import About from './pages/About/About';
-import AddBrand from './pages/AddBrand/AddBrand';
-import AddCategory from './pages/AddCategory/AddCategory';
-import AddProduct from './pages/AddProduct/AddProduct';
-import Admin from './pages/Admin/Admin';
-import Cart from './pages/Cart/Cart';
-import ContactUs from './pages/ContactUs/ContactUs';
-import EditProduct from './pages/EditProduct/EditProduct';
-import Home from './pages/Home/Home';
-import Login from './pages/Login/Login';
-import Notfound from './pages/Notfound/Notfound';
-import Product from './pages/Product/Product';
-import Products from './pages/Products/Products';
-import SignUp from './pages/SignUp/SignUp';
-import User from './pages/User/User';
+import AboutPage from './pages/AboutPage';
+import AddBrandPage from './pages/AddBrandPage';
+import AddCategoryPage from './pages/AddCategoryPage';
+import AddProductPage from './pages/AddProductPage';
+import AdminPage from './pages/AdminPage';
+import CartPage from './pages/CartPage';
+import ContactUsPage from './pages/ContactUsPage';
+import EditProductPage from './pages/EditProductPage';
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import NotfoundPage from './pages/NotfoundPage';
+import ProductPage from './pages/ProductPage';
+import ProductsPage from './pages/ProductsPage';
+import SignUpPage from './pages/SignUpPage';
+import UserPage from './pages/UserPage';
 
 function App() {
   const { user } = useContext(Context);
@@ -24,39 +24,42 @@ function App() {
     <div className="app">
       <Router>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/product/:id" element={<Product />} />
+          <Route path="/" element={<HomePage />} />
 
-          {!user && <Route path="/login" element={<Login />} />}
-          {!user && <Route path="/sign-up" element={<SignUp />} />}
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/products" element={<ProductsPage />} />
+          <Route path="/product/:id" element={<ProductPage />} />
+
+          {!user && <Route path="/login" element={<LoginPage />} />}
+          {!user && <Route path="/sign-up" element={<SignUpPage />} />}
 
           {user && !user.isAdmin && (
-            <Route path="/user/:id" element={<User />} />
+            <Route path="/user/:id" element={<UserPage />} />
           )}
           {user && !user.isAdmin && (
-            <Route path="/contact" element={<ContactUs />} />
+            <Route path="/contact" element={<ContactUsPage />} />
           )}
-          {user && !user.isAdmin && <Route path="/cart" element={<Cart />} />}
-
-          {user && user.isAdmin && (
-            <Route path="admin/:id" element={<Admin />} />
-          )}
-          {user && user.isAdmin && (
-            <Route path="/add-category" element={<AddCategory />} />
-          )}
-          {user && user.isAdmin && (
-            <Route path="/add-brand" element={<AddBrand />} />
-          )}
-          {user && user.isAdmin && (
-            <Route path="/add-product" element={<AddProduct />} />
-          )}
-          {user && user.isAdmin && (
-            <Route path="/edit-product" element={<EditProduct />} />
+          {user && !user.isAdmin && (
+            <Route path="/cart" element={<CartPage />} />
           )}
 
-          <Route path="*" element={<Notfound />} />
+          {user && user.isAdmin && (
+            <Route path="admin/:id" element={<AdminPage />} />
+          )}
+          {user && user.isAdmin && (
+            <Route path="/add-category" element={<AddCategoryPage />} />
+          )}
+          {user && user.isAdmin && (
+            <Route path="/add-brand" element={<AddBrandPage />} />
+          )}
+          {user && user.isAdmin && (
+            <Route path="/add-product" element={<AddProductPage />} />
+          )}
+          {user && user.isAdmin && (
+            <Route path="/edit-product" element={<EditProductPage />} />
+          )}
+
+          <Route path="*" element={<NotfoundPage />} />
         </Routes>
       </Router>
     </div>

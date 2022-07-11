@@ -1,5 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap');
 
+$navy-light: #324d67;
+$navy-dark: #102a42;
+$ct-orange: #ab7a5f;
+$fs-small: 1.5rem;
+$fs-medium: 1.75rem;
+$fs-large: 2rem;
+$bp-1000: 999px;
+$bp-900: 899px;
+$bp-600: 599px;
+
 html {
   font-size: 62.5%;
   font-family: 'Ubuntu', sans-serif;
@@ -32,4 +42,2217 @@ button {
 
 .app {
   width: 100%;
+}
+
+.loading {
+  align-self: center;
+  justify-self: center;
+}
+
+// NOTE: NAVBAR
+.navbar {
+  align-self: center;
+  max-width: 1250px;
+  z-index: 1000;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 3rem;
+  position: relative;
+
+  &__title {
+    font-size: $fs-large * 1.5;
+    color: $navy-dark;
+  }
+
+  &__links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  &__link {
+    font-size: $fs-medium;
+    color: $navy-light;
+  }
+
+  &__boxes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  &__box {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    position: relative;
+  }
+
+  &__sizeOfCart {
+    width: 3rem;
+    height: 3rem;
+    position: absolute;
+    top: -1rem;
+    right: -1rem;
+    font-size: $fs-medium;
+    background-color: #f1f5f8;
+    color: $navy-dark;
+    border-radius: 50%;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  &__icon {
+    font-size: $fs-small * 2.65;
+    color: $navy-dark;
+  }
+
+  &__boxLink {
+    font-size: $fs-medium;
+    color: $navy-dark;
+  }
+
+  &__toggle {
+    font-size: $fs-large * 1.75;
+    color: $navy-dark;
+    cursor: pointer;
+  }
+
+  &__model {
+    background-color: white;
+    position: absolute;
+    top: 8.5rem;
+    left: 0;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    z-index: 1000;
+    padding: 1rem;
+  }
+
+  &__modelLinks {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__modelLink {
+    font-size: $fs-medium;
+    color: $navy-light;
+    padding: 1.5rem 3rem;
+  }
+
+  &__modelBoxes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+  }
+
+  &__modelBox {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+  }
+
+  &__modelIcon {
+    font-size: $fs-small * 2.5;
+    color: $navy-dark;
+  }
+
+  &__modelBoxLink {
+    font-size: $fs-medium;
+    color: $navy-dark;
+  }
+}
+
+// NOTE: USER
+.user {
+  display: flex;
+  flex-direction: column;
+  gap: 7.5rem;
+  min-height: 100vh;
+
+  &__empty {
+    text-align: center;
+    font-size: $fs-large * 1.25;
+    color: $navy-dark;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+  }
+
+  &__main {
+    align-self: center;
+    max-width: 1250px;
+    width: 100%;
+    padding: 0 3rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  &__titleBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__outerTitleBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__icon {
+    font-size: $fs-large * 2.25;
+    color: $navy-dark;
+  }
+
+  &__innerTitleBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__name {
+    font-size: $fs-small;
+    color: $navy-dark;
+    font-weight: 600;
+    line-height: 2rem;
+  }
+
+  &__email {
+    font-size: $fs-small;
+    color: $navy-dark;
+    line-height: 2rem;
+  }
+
+  &__logoutIcon {
+    font-size: $fs-large * 1.9;
+    color: $navy-dark;
+    cursor: pointer;
+  }
+
+  &__orders {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  &__ordersText {
+    font-size: $fs-small;
+    color: $navy-dark;
+    font-weight: 600;
+  }
+
+  &__ordersBox {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  &__order {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  &__orderBox {
+    width: 100%;
+    border-radius: 3px;
+    padding: 1rem;
+    background-color: #f1f5f8;
+    display: grid;
+    grid-template-columns: 1fr;
+
+    @media screen and (min-width: $bp-600) {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media screen and (min-width: $bp-900) {
+      display: grid;
+      grid-template-columns: 1.25fr repeat(3, 0.5fr) 1fr;
+    }
+  }
+
+  &__orderInfo {
+    font-size: $fs-small;
+    font-weight: 600;
+    color: $navy-dark;
+    text-transform: uppercase;
+  }
+
+  &__orderInfoLast {
+    justify-self: unset;
+    @media screen and (min-width: $bp-900) {
+      justify-self: end;
+    }
+  }
+
+  &__orderIcon {
+    font-size: $fs-small;
+    background-color: #bb2525;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    cursor: pointer;
+    width: max-content;
+    align-self: flex-start;
+
+    @media screen and (min-width: $bp-900) {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      align-self: stretch;
+    }
+  }
+}
+
+// NOTE: ADMIN
+.admin {
+  display: flex;
+  flex-direction: column;
+  gap: 7.5rem;
+  min-height: 100vh;
+
+  &__main {
+    align-self: center;
+    max-width: 1250px;
+    width: 100%;
+    padding: 0 3rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  &__titleBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__outerTitleBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__icon {
+    font-size: $fs-large * 2.25;
+    color: $navy-dark;
+  }
+
+  &__innerTitleBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__name {
+    font-size: $fs-small;
+    color: $navy-dark;
+    font-weight: 600;
+    line-height: 2rem;
+  }
+
+  &__email {
+    font-size: $fs-small;
+    color: $navy-dark;
+    line-height: 2rem;
+  }
+
+  &__logoutIcon {
+    font-size: $fs-large * 1.9;
+    color: $navy-dark;
+    cursor: pointer;
+  }
+
+  &__items {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  &__itemsTitleBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__itemsTitleBoxInner {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    @media screen and (min-width: $bp-900) {
+      gap: 1.5rem;
+    }
+  }
+
+  &__option {
+    font-size: $fs-small;
+    font-weight: 600;
+    color: $navy-dark;
+    cursor: pointer;
+    position: relative;
+  }
+
+  &__selectedIcon {
+    position: absolute;
+    top: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: $fs-large;
+  }
+
+  &__count {
+    font-size: $fs-small;
+    font-weight: 600;
+    color: $navy-dark;
+  }
+
+  &__emails {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  &__emailBox {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  &__emailItem {
+    position: relative;
+    width: 100%;
+    border-radius: 3px;
+    padding: 1rem;
+    background-color: #f1f5f8;
+    display: grid;
+
+    @media screen and (min-width: $bp-600) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media screen and (min-width: $bp-900) {
+      grid-template-columns: 1.25fr 1fr repeat(2, 0.5fr);
+    }
+  }
+
+  &__emailContent {
+    background-color: #f1f5f8;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  &__emailHeader {
+    font-size: $fs-medium;
+    font-weight: 600;
+    color: $navy-dark;
+  }
+
+  &__emailText {
+    font-size: $fs-small;
+    color: $navy-dark;
+  }
+
+  &__emailProperty {
+    font-size: $fs-small * 0.925;
+    font-weight: 600;
+    color: $navy-dark;
+  }
+
+  &__emailPropertyEmail {
+    text-align: start;
+
+    @media screen and (min-width: $bp-600) and (max-width: $bp-900) {
+      text-align: end;
+    }
+  }
+
+  &__emailIcon {
+    font-size: $fs-large;
+    color: $navy-dark;
+    cursor: pointer;
+    text-align: start;
+
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+
+    @media screen and (min-width: $bp-600) {
+      text-align: end;
+      position: relative;
+      top: unset;
+      right: unset;
+    }
+  }
+
+  &__orders {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  &__orderItem {
+    position: relative;
+    width: 100%;
+    border-radius: 3px;
+    padding: 1rem;
+    background-color: #f1f5f8;
+    display: grid;
+    grid-template-columns: 1fr;
+
+    @media screen and (min-width: $bp-600) {
+      align-items: center;
+      grid-template-columns: 1fr max-content;
+      padding-right: 5rem;
+    }
+
+    @media screen and (min-width: $bp-900) {
+      align-items: center;
+      grid-template-columns: 1fr 0.5fr 1.25fr 0.5fr 0.25fr;
+      padding: 1rem;
+    }
+  }
+
+  &__orderPropertyBox {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  &__orderProperty {
+    font-size: $fs-small * 0.925;
+    font-weight: 600;
+    color: $navy-dark;
+  }
+
+  &__orderIcon {
+    font-size: $fs-large;
+    color: $navy-dark;
+    cursor: pointer;
+    text-align: start;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+
+    @media screen and (min-width: $bp-900) {
+      position: relative;
+      top: unset;
+      right: unset;
+      text-align: end;
+    }
+  }
+}
+
+// NOTE: HOME
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: 7.5rem;
+
+  // NOTE: FEATURED
+  .featured {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+    padding: 5rem 3rem;
+    background-color: #f1f5f8;
+
+    @media screen and (min-width: $bp-600) {
+      gap: 5rem;
+    }
+
+    &__title {
+      font-size: $fs-large * 1.25;
+      color: $navy-dark;
+      font-weight: 600;
+
+      @media screen and (min-width: $bp-600) {
+        font-size: $fs-large * 1.6;
+      }
+    }
+
+    &__products {
+      max-width: 1250px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+
+      @media screen and (min-width: $bp-600) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @media screen and (min-width: $bp-900) {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    &__product {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    &__lastProduct {
+      @media screen and (min-width: $bp-600) and (max-width: $bp-900) {
+        grid-column: span 2;
+      }
+    }
+
+    &__productImg {
+      width: 100%;
+      border-radius: 3px;
+    }
+
+    &__productBox {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &__productTitle {
+      font-size: $fs-small;
+      font-weight: 500;
+      color: $navy-dark;
+    }
+
+    &__productPrice {
+      font-size: $fs-small;
+      font-weight: 500;
+      color: $navy-dark;
+    }
+
+    &__btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: $fs-small;
+      color: $navy-dark;
+      font-weight: 600;
+    }
+  }
+
+  .titleBox {
+    align-self: center;
+    width: 100%;
+    max-width: 1250px;
+    display: flex;
+    padding: 0 3rem;
+    min-height: 40rem;
+    gap: 5rem;
+
+    &__left {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    &__title {
+      font-size: $fs-large * 1.9;
+      color: $navy-dark;
+      font-weight: 700;
+
+      @media screen and (min-width: $bp-900) {
+        font-size: $fs-large * 2;
+      }
+    }
+
+    &__text {
+      font-size: $fs-medium;
+      color: rgba($navy-light, 0.75);
+    }
+
+    &__btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: $fs-medium;
+      align-self: flex-start;
+      color: $navy-dark;
+      font-weight: 600;
+    }
+
+    &__right {
+      display: none;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      border-radius: 3px;
+
+      @media screen and (min-width: $bp-900) {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+      }
+    }
+
+    &__img {
+      width: 100%;
+      min-width: 35rem;
+      max-width: 42.5rem;
+      border-radius: 3px;
+    }
+  }
+}
+
+// NOTE: TABLE
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+
+  &__head {
+    background-color: $navy-dark;
+  }
+
+  &__body {
+  }
+
+  &__row {
+  }
+
+  &__heading {
+    text-align: left;
+    font-size: $fs-small;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 1rem;
+  }
+
+  &__data {
+    text-align: left;
+    font-size: $fs-small;
+    color: $navy-dark;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 1rem;
+    background-color: #f1f5f8;
+  }
+}
+
+// NOTE: ADD PRODUCT
+.add {
+  display: flex;
+  flex-direction: column;
+  gap: 7.5rem;
+  min-height: 100vh;
+
+  &__form {
+    padding: 0 3rem;
+    width: 100%;
+    max-width: 1250px;
+    align-self: center;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  &__formBox {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-medium;
+    }
+  }
+
+  &__formBox2 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-medium;
+      flex-direction: row;
+      gap: 1rem;
+    }
+  }
+
+  &__label {
+    font-size: $fs-small;
+    color: $navy-dark;
+    font-weight: 500;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-medium;
+    }
+  }
+
+  &__input {
+    width: 100%;
+    padding: 1rem;
+    font-size: $fs-small;
+    color: $navy-dark;
+    background-color: #f1f5f8;
+    border: none;
+    outline: none;
+    border-radius: 3px;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-medium;
+    }
+  }
+
+  &__textarea {
+    padding: 1rem;
+    font-size: $fs-small;
+    color: $navy-dark;
+    min-height: 250px;
+    background-color: #f1f5f8;
+    border: none;
+    outline: none;
+    border-radius: 3px;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-medium;
+    }
+  }
+
+  &__select {
+    width: 100%;
+    padding: 1.42rem;
+    font-size: $fs-small;
+    color: $navy-dark;
+    background-color: #f1f5f8;
+    border: none;
+    outline: none;
+    border-radius: 3px;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-medium;
+    }
+  }
+
+  &__option {
+    color: $navy-dark;
+    background-color: #f1f5f8;
+  }
+
+  &__btn {
+    font-size: $fs-small;
+    color: $navy-dark;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-medium;
+    }
+  }
+
+  &__icon {
+    font-size: $fs-medium;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-large;
+    }
+  }
+}
+
+// NOTE: CART
+.cart {
+  display: flex;
+  flex-direction: column;
+  gap: 7.5rem;
+  min-height: 100vh;
+
+  &__empty {
+    text-align: center;
+    font-size: $fs-large * 1.25;
+    color: $navy-dark;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+  }
+
+  &__main {
+    flex: 1;
+    padding: 0 3rem;
+    width: 100%;
+    max-width: 1250px;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  &__titleBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+    @media screen and (min-width: $bp-600) {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  &__size {
+    font-size: $fs-medium;
+    color: $navy-dark;
+    font-weight: 600;
+  }
+
+  &__clearBtn {
+    font-size: $fs-medium;
+    color: $navy-dark;
+    background-color: #f1f5f8;
+    padding: 0.1rem 0.5rem;
+    border-radius: 3px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+
+    @media screen and (min-width: $bp-600) {
+      width: max-content;
+    }
+  }
+
+  &__orders {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  &__orderBox {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  &__order {
+    width: 100%;
+    display: flex;
+    border-radius: 3px;
+    overflow: hidden;
+    flex-direction: column;
+    gap: 0.5rem;
+    background-color: transparent;
+
+    @media screen and (min-width: $bp-600) {
+      flex-direction: row;
+      align-items: center;
+      gap: 2.5rem;
+      background-color: #f1f5f8;
+    }
+  }
+
+  &__icon {
+    font-size: $fs-small;
+    background-color: #bb2525;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    cursor: pointer;
+    width: max-content;
+    align-self: flex-start;
+
+    @media screen and (min-width: $bp-600) {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      align-self: stretch;
+    }
+  }
+
+  &__img {
+    width: 100%;
+    max-width: 600px;
+
+    @media screen and (min-width: $bp-600) {
+      max-width: 150px;
+    }
+  }
+
+  &__infos {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+
+    @media screen and (min-width: $bp-600) {
+      display: grid;
+      grid-template-columns: 1fr 0.5fr;
+    }
+
+    @media screen and (min-width: $bp-900) {
+      padding-right: 2.5rem;
+      grid-template-columns: 1fr repeat(3, 0.5fr);
+    }
+  }
+
+  &__info {
+    font-size: $fs-small;
+    color: $navy-dark;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  &__infoLast {
+    text-align: start;
+    @media screen and (min-width: $bp-900) {
+      text-align: end;
+    }
+  }
+
+  &__payment {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  &__paymentBox {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background-color: #f1f5f8;
+    border-radius: 3px;
+    padding: 1rem;
+  }
+
+  &__paymentInnerBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__paymentLabel {
+    font-size: $fs-medium;
+    color: $navy-dark;
+    font-weight: 600;
+  }
+
+  &__paymentValue {
+    font-size: $fs-medium;
+    color: $navy-dark;
+    font-weight: 600;
+  }
+
+  &__paymentAddress {
+    outline: none;
+    border: none;
+    padding: 1rem;
+    background-color: #f1f5f8;
+    color: $navy-dark;
+    border-radius: 3px;
+    font-size: $fs-small;
+  }
+
+  &__paymentBtn {
+    font-size: $fs-medium;
+    color: $navy-dark;
+    background-color: #f1f5f8;
+    padding: 0.5rem 0.5rem;
+    border-radius: 3px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+  }
+}
+
+// NOTE: EDIT PRODUCT
+.editProduct {
+  display: flex;
+  flex-direction: column;
+  gap: 7.5rem;
+  min-height: 100vh;
+
+  &__form {
+    padding: 0 3rem;
+    width: 100%;
+    max-width: 1250px;
+    align-self: center;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  &__formBox {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-medium;
+    }
+  }
+
+  &__formBox2 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-medium;
+      flex-direction: row;
+      gap: 1rem;
+    }
+  }
+
+  &__label {
+    font-size: $fs-small;
+    color: $navy-dark;
+    font-weight: 500;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-medium;
+    }
+  }
+
+  &__input {
+    width: 100%;
+    padding: 1rem;
+    font-size: $fs-small;
+    color: $navy-dark;
+    background-color: #f1f5f8;
+    border: none;
+    outline: none;
+    border-radius: 3px;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-medium;
+    }
+  }
+
+  &__textarea {
+    padding: 1rem;
+    font-size: $fs-small;
+    color: $navy-dark;
+    min-height: 250px;
+    background-color: #f1f5f8;
+    border: none;
+    outline: none;
+    border-radius: 3px;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-medium;
+    }
+  }
+
+  &__select {
+    width: 100%;
+    padding: 1.42rem;
+    font-size: $fs-small;
+    color: $navy-dark;
+    background-color: #f1f5f8;
+    border: none;
+    outline: none;
+    border-radius: 3px;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-medium;
+    }
+  }
+
+  &__option {
+    color: $navy-dark;
+    background-color: #f1f5f8;
+  }
+
+  &__btn {
+    font-size: $fs-small;
+    color: $navy-dark;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-medium;
+    }
+  }
+
+  &__icon {
+    font-size: $fs-medium;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-large;
+    }
+  }
+}
+
+// NOTE: ABOUT US
+.aboutUs {
+  align-self: center;
+  max-width: 1250px;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+
+  @media screen and (min-width: $bp-900) {
+    gap: 5rem;
+  }
+
+  &__titleBox {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+
+    @media screen and (min-width: $bp-900) {
+      flex-direction: row;
+    }
+  }
+
+  &__title {
+    font-size: $fs-large * 1.25;
+    color: $navy-dark;
+    font-weight: 600;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-large * 1.6;
+      flex: 100%;
+    }
+  }
+
+  &__message {
+    font-size: $fs-small;
+    color: rgba($navy-light, 0.75);
+
+    @media screen and (min-width: $bp-900) {
+      font-size: $fs-medium;
+    }
+  }
+
+  &__cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+
+    @media screen and (min-width: $bp-600) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media screen and (min-width: $bp-900) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  &__card {
+    border-radius: 3px;
+    padding: 5rem 1rem;
+    background-color: #f1f5f8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+
+    @media screen and (min-width: $bp-900) {
+      padding: 5rem 2rem;
+    }
+  }
+
+  &__lastCard {
+    @media screen and (min-width: $bp-600) and (max-width: $bp-900) {
+      grid-column: span 2;
+      padding: 5rem;
+    }
+  }
+
+  &__cardIcon {
+    font-size: $fs-large * 2;
+    color: $navy-dark;
+  }
+
+  &__cardTitle {
+    font-size: $fs-large;
+    color: $navy-dark;
+    font-weight: 500;
+  }
+
+  &__cardMessage {
+    font-size: $fs-small;
+    color: rgba($navy-light, 0.75);
+    text-align: center;
+  }
+}
+
+// NOTE: LOGIN
+.login {
+  display: flex;
+  flex-direction: column;
+  gap: 7.5rem;
+  min-height: 100vh;
+
+  &__form {
+    padding: 0 3rem;
+    width: 100%;
+    max-width: 1250px;
+    align-self: center;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  &__formBox {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-medium;
+    }
+  }
+
+  &__label {
+    font-size: $fs-small;
+    color: $navy-dark;
+    font-weight: 500;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-medium;
+    }
+  }
+
+  &__input {
+    padding: 1rem;
+    font-size: $fs-small;
+    color: $navy-dark;
+    background-color: #f1f5f8;
+    border: none;
+    outline: none;
+    border-radius: 3px;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-medium;
+    }
+  }
+
+  &__buttonsBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+  }
+
+  &__link {
+    font-size: $fs-small;
+    color: $navy-dark;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-medium;
+    }
+  }
+
+  &__icon {
+    font-size: $fs-large;
+  }
+
+  &__btn {
+    font-size: $fs-small;
+    color: $navy-dark;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-medium;
+    }
+  }
+}
+
+// NOTE: NOT FOUND
+.notfound {
+  display: flex;
+  flex-direction: column;
+  gap: 7.5rem;
+  min-height: 100vh;
+
+  &__main {
+    align-self: center;
+    max-width: 1250px;
+    padding: 0 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    gap: 2.5rem;
+  }
+
+  &__title {
+    font-size: $fs-large * 5;
+    color: $navy-dark;
+    line-height: 10rem;
+  }
+
+  &__text {
+    font-size: $fs-small;
+    color: $navy-dark;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-medium;
+    }
+  }
+
+  &__link {
+    font-size: $fs-small;
+    font-weight: 600;
+    color: $navy-dark;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-medium;
+    }
+  }
+
+  &__icon {
+    font-size: $fs-large;
+    font-weight: 600;
+    color: $navy-dark;
+  }
+}
+
+// NOTE: PRODUCT
+.productPage {
+  display: flex;
+  flex-direction: column;
+  gap: 7.5rem;
+
+  &__outbox {
+    align-self: center;
+    max-width: 1250px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  &__link {
+    padding: 0 3rem;
+    font-size: $fs-medium;
+    color: $navy-dark;
+    display: flex;
+    gap: 1rem;
+    max-width: max-content;
+    font-weight: 500;
+  }
+
+  &__main {
+    padding: 0 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+
+    @media screen and (min-width: $bp-1000) {
+      flex-direction: row;
+    }
+  }
+
+  &__pictures {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  &__mainPictureBox {
+    max-height: 400px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+  }
+
+  &__mainPicture {
+    width: 100%;
+    border-radius: 3px;
+  }
+
+  &__picturesBox {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+
+  &__littleImg {
+    width: 100%;
+    border-radius: 3px;
+    cursor: pointer;
+    padding: 0.1rem;
+    opacity: 0.75;
+  }
+
+  &__littleImgSelected {
+    border: 2px solid $navy-dark;
+    border-radius: 3px;
+    opacity: 1;
+  }
+
+  &__details {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    @media screen and (min-width: $bp-1000) {
+      gap: 2.5rem;
+    }
+  }
+
+  &__name {
+    font-size: $fs-large;
+    color: $navy-dark;
+    font-weight: 600;
+    line-height: 2.5rem;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-large * 1.5;
+    }
+
+    @media screen and (min-width: $bp-1000) {
+      font-size: $fs-large * 1.75;
+    }
+  }
+
+  &__price {
+    font-size: $fs-small;
+    color: $navy-dark;
+    font-weight: 500;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-medium;
+    }
+  }
+
+  &__description {
+    font-size: $fs-small;
+    color: rgba($navy-light, 0.8);
+  }
+
+  &__detailBox {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__intro {
+    font-size: $fs-small;
+    color: $navy-dark;
+    font-weight: 500;
+  }
+
+  &__available {
+    font-size: $fs-small;
+    color: $navy-dark;
+  }
+
+  &__colors {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__color {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    cursor: pointer;
+    opacity: 0.5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__colorIcon {
+    color: white;
+    font-size: $fs-large;
+  }
+
+  &__sizes {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__size {
+    font-size: $fs-small;
+    color: $navy-dark;
+    padding: 0.025rem 0.5rem;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+
+  &__sizeSelected {
+    background-color: $navy-dark;
+    color: white;
+  }
+
+  &__btn {
+    margin-top: 0.5rem;
+    font-size: $fs-small;
+    color: $navy-dark;
+    font-weight: 600;
+    align-self: flex-start;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+
+    @media screen and (min-width: $bp-1000) {
+      font-size: $fs-medium;
+    }
+  }
+
+  &__btnIcon {
+    font-size: $fs-large;
+
+    @media screen and (min-width: $bp-1000) {
+      font-size: $fs-large * 1.5;
+    }
+  }
+}
+
+// NOTE: PRODUCTS
+.products {
+  display: flex;
+  flex-direction: column;
+  gap: 7.5rem;
+
+  &__main {
+    width: 100%;
+    align-self: center;
+    max-width: 1250px;
+    padding: 0 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  &__mainTitleBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @media screen and (min-width: $bp-1000) {
+      justify-content: flex-end;
+    }
+  }
+
+  &__listBtn {
+    font-size: $fs-large * 1.5;
+    color: $navy-dark;
+    cursor: pointer;
+  }
+
+  &__sizeBox {
+    display: flex;
+    gap: 0.5rem;
+
+    @media screen and (min-width: $bp-600) {
+      gap: 1rem;
+    }
+  }
+
+  &__size {
+    font-size: $fs-small;
+    color: $navy-dark;
+    align-self: flex-end;
+    width: max-content;
+    font-weight: 600;
+  }
+
+  &__productIconA {
+    font-size: $fs-large * 1.25;
+    color: #28a745;
+    cursor: pointer;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-large * 1.4;
+    }
+  }
+
+  &__mainContent {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+
+    @media screen and (min-width: $bp-1000) {
+      grid-template-columns: 200px 1fr;
+    }
+  }
+
+  &__edits {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
+
+  &__input {
+    width: 100%;
+    outline: none;
+    border: none;
+    background-color: #f1f5f8;
+    padding: 0.5rem 1rem;
+    border-radius: 3px;
+  }
+
+  &__editsBox {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  &__outerBox {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__boxTitleBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__boxTitle {
+    font-size: $fs-medium;
+    font-weight: 600;
+    color: $navy-dark;
+    text-transform: uppercase;
+  }
+
+  &__boxIcon {
+    font-size: $fs-medium;
+    color: #28a745;
+    cursor: pointer;
+  }
+
+  &__innerBox {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__editItemBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__editItem {
+    font-size: $fs-small;
+    color: $navy-dark;
+    cursor: pointer;
+    width: max-content;
+  }
+
+  &__selected {
+    border-bottom: 1px solid currentColor;
+  }
+
+  &__editItemIcon {
+    font-size: $fs-small;
+    color: #bb2525;
+    cursor: pointer;
+  }
+
+  &__priceNumber {
+    font-size: $fs-small;
+    color: $navy-dark;
+  }
+
+  &__priceSlider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 25px;
+    background: #f1f5f8;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: 0.2s;
+    transition: opacity 0.2s;
+    border-radius: 3px;
+    overflow: hidden;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 12.5px;
+      height: 25px;
+      background: $navy-dark;
+      cursor: pointer;
+    }
+
+    &::-moz-range-thumb {
+      width: 12.5px;
+      height: 25px;
+      background: $navy-dark;
+      cursor: pointer;
+    }
+  }
+
+  &__btnClear {
+    font-size: $fs-small;
+    color: $navy-dark;
+    background-color: #f1f5f8;
+    padding: 0.1rem 0.5rem;
+    border-radius: 3px;
+    font-weight: 600;
+    cursor: pointer;
+    width: max-content;
+  }
+
+  &__products {
+    height: max-content;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+
+    @media screen and (min-width: $bp-600) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media screen and (min-width: $bp-1000) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  &__productBox {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  &__product {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__icons {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 0.35rem;
+    background-color: white;
+    padding: 0.1rem 0.35rem;
+    border-bottom-left-radius: 3px;
+  }
+
+  &__productIconD {
+    font-size: $fs-medium;
+    cursor: pointer;
+    color: #bb2525;
+  }
+
+  &__productIconE {
+    font-size: $fs-medium;
+    cursor: pointer;
+    color: #ffc107;
+  }
+
+  &__productImg {
+    border-radius: 3px;
+    width: 100%;
+  }
+
+  &__productBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__productName {
+    font-size: $fs-small;
+    color: $navy-dark;
+    text-transform: none;
+  }
+
+  &__productPrice {
+    font-size: $fs-small;
+    color: $navy-dark;
+  }
+}
+
+// NOTE: SIGN UP
+.signUp {
+  display: flex;
+  flex-direction: column;
+  gap: 7.5rem;
+  min-height: 100vh;
+
+  &__form {
+    padding: 0 3rem;
+    width: 100%;
+    max-width: 1250px;
+    align-self: center;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  &__formBox {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-medium;
+    }
+  }
+
+  &__label {
+    font-size: $fs-small;
+    color: $navy-dark;
+    font-weight: 500;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-medium;
+    }
+  }
+
+  &__input {
+    padding: 1rem;
+    font-size: $fs-small;
+    color: $navy-dark;
+    background-color: #f1f5f8;
+    border: none;
+    outline: none;
+    border-radius: 3px;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-medium;
+    }
+  }
+
+  &__buttonsBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+  }
+
+  &__link {
+    font-size: $fs-small;
+    color: $navy-dark;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-medium;
+    }
+  }
+
+  &__icon {
+    font-size: $fs-large;
+  }
+
+  &__btn {
+    font-size: $fs-small;
+    color: $navy-dark;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-medium;
+    }
+  }
+}
+
+// NOTE: CONTACT US
+.contactUs {
+  display: flex;
+  flex-direction: column;
+  gap: 7.5rem;
+  min-height: 100vh;
+
+  &__form {
+    padding: 0 3rem;
+    width: 100%;
+    max-width: 1250px;
+    align-self: center;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  &__formBox {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-medium;
+    }
+  }
+
+  &__label {
+    font-size: $fs-small;
+    color: $navy-dark;
+    font-weight: 500;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-medium;
+    }
+  }
+
+  &__input {
+    padding: 1rem;
+    font-size: $fs-small;
+    color: $navy-dark;
+    background-color: #f1f5f8;
+    border: none;
+    outline: none;
+    border-radius: 3px;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-medium;
+    }
+  }
+
+  &__textarea {
+    padding: 1rem;
+    font-size: $fs-small;
+    color: $navy-dark;
+    min-height: 300px;
+    background-color: #f1f5f8;
+    border: none;
+    outline: none;
+    border-radius: 3px;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-medium;
+    }
+  }
+
+  &__btn {
+    font-size: $fs-small;
+    color: $navy-dark;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-medium;
+    }
+  }
+
+  &__icon {
+    font-size: $fs-medium;
+
+    @media screen and (min-width: $bp-600) {
+      font-size: $fs-large;
+    }
+  }
+}
+
+// NOTE: ABOUT
+.about {
+  display: flex;
+  flex-direction: column;
+  gap: 7.5rem;
+
+  .main {
+    max-width: 1250px;
+    align-self: center;
+    padding: 0 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2.5rem;
+
+    @media screen and (min-width: $bp-900) {
+      flex-direction: row;
+    }
+
+    &__left {
+      width: 100%;
+      max-height: 500px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 3px;
+    }
+
+    &__img {
+      width: 100%;
+      border-radius: 3px;
+    }
+
+    &__right {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    &__title {
+      font-size: $fs-large * 1.5;
+      color: $navy-dark;
+
+      @media screen and (min-width: $bp-900) {
+        font-size: $fs-large * 1.75;
+      }
+    }
+
+    &__text {
+      font-size: $fs-small;
+      color: rgba($navy-light, 0.75);
+
+      @media screen and (min-width: $bp-900) {
+        font-size: $fs-medium;
+      }
+    }
+  }
+}
+
+// NOTE: FOOTER
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: #212121;
+  color: white;
+  font-size: $fs-small;
+  padding: 2.5rem 1rem;
+}
+
+.notFoundText {
+  font-size: $fs-large;
+  color: $navy-dark;
+  font-weight: 600;
+  text-align: center;
+  flex: 1;
+  align-self: center;
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.errorMessage {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #dc3545;
+  color: white;
+  padding: 1rem;
+  border-radius: 3px;
+
+  &__message {
+    font-size: $fs-small;
+  }
+
+  &__icon {
+    font-size: $fs-large;
+    cursor: pointer;
+  }
+}
+
+.successMessage {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #28a745;
+  color: white;
+  padding: 1rem;
+  border-radius: 3px;
+
+  &__message {
+    font-size: $fs-small;
+  }
+
+  &__icon {
+    font-size: $fs-large;
+    cursor: pointer;
+  }
+}
+
+.hidden {
+  position: absolute;
+  opacity: 0;
+  height: 0;
+}
+
+.skeletonProductBox {
+  display: block;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  &__big {
+    height: 100%;
+    min-height: 200px;
+  }
+
+  &__small {
+    min-height: 20px;
+  }
 }

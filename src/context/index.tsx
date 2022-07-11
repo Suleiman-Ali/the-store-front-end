@@ -4,6 +4,7 @@ import {
   CartType,
   CategoryType,
   EmailType,
+  getConfig,
   getUser,
   OrderType,
   ProductType,
@@ -11,7 +12,6 @@ import {
   UserType,
 } from '../data';
 import api from '../api';
-import jwtDecode from 'jwt-decode';
 
 interface ContextValuesTypes {
   products: ProductType[];
@@ -21,22 +21,21 @@ interface ContextValuesTypes {
   user: UserType | undefined;
   cart: CartType | undefined;
   isWindowOver1000: boolean;
-  signUp: (name: string, email: string, password: string) => void;
-  login: (email: string, password: string) => void;
+  userSetter: (user: UserType) => void;
+  cartSetter: (cart: CartType) => void;
+  ordersOfUserSetter: (orders: RealOrderType[]) => void;
   addToCart: (order: OrderType) => void;
-  deleteFromCart: (id: string) => void;
   clearCart: () => void;
   checkout: (orders: RealOrderType[]) => void;
   logout: () => void;
-  cancelOrder: (id: string) => void;
-  deleteCategory: (id: string) => void;
-  deleteBrand: (id: string) => void;
   addCategory: (name: string) => void;
   addBrand: (name: string) => void;
-  deleteProduct: (id: string) => void;
   addProduct: (product: ProductType) => void;
   editProduct: (product: ProductType) => void;
-  resolveOrder: (id: string) => void;
+  allOrdersSetter: (orders: RealOrderType[]) => void;
+  brandsSetter: (brands: BrandType[]) => void;
+  categoriesSetter: (cats: CategoryType[]) => void;
+  productsSetter: (products: ProductType[]) => void;
   allOrders: RealOrderType[];
   allEmails: EmailType[];
 }
@@ -63,37 +62,13 @@ export function ContextProvider({
   const [user, setUser] = useState<UserType | undefined>();
   const [cart, setCart] = useState<CartType | undefined>();
 
-  const signUp = async (name: string, email: string, password: string) => {
-    const { data: userObj } = await api.post('/users', {
-      name,
-      email,
-      password,
-    });
-
-    const { data: token } = await api.post('/auth', {
-      email,
-      password,
-    });
-
-    const config = {
-      headers: { 'x-auth-token': token as string },
-    };
-
-    await api.post('/carts', {}, config);
-
-    setUser(userObj);
-    localStorage.setItem('JWT_TOKEN', token);
-  };
-
-  const login = async (email: string, password: string) => {
-    const { data: token } = await api.post('/auth', {
-      email,
-      password,
-    });
-
-    setUser(jwtDecode(token));
-    localStorage.setItem('JWT_TOKEN', token);
-  };
+  const userSetter = (user: UserType) => setUser(user);
+  const cartSetter = (cart: CartType) => setCart(cart);
+  const ordersOfUserSetter = (orders: RealOrderType[]) => setOrders(orders);
+  const allOrdersSetter = (orders: RealOrderType[]) => setAllOrders(orders);
+  const brandsSetter = (brands: BrandType[]) => setBrands(brands);
+  const categoriesSetter = (cats: CategoryType[]) => setCategories(cats);
+  const productsSetter = (products: ProductType[]) => setProducts(products);
 
   const logout = () => {
     localStorage.removeItem('JWT_TOKEN');
@@ -107,36 +82,10 @@ export function ContextProvider({
     const newCart = { ...cart, products: [...cart.products, order] };
     setCart(newCart);
 
-    const token = localStorage.getItem('JWT_TOKEN');
-    const config = {
-      headers: { 'x-auth-token': token as string },
-    };
+    const config = getConfig();
 
     try {
-      const { data } = await api.put('/carts/', newCart, config);
-      setCart(data);
-    } catch (e) {
-      setCart(oldCart);
-    }
-  };
-
-  const deleteFromCart = async (id: string) => {
-    if (!cart) return;
-
-    const oldCart = { ...cart };
-    const newCart = {
-      ...cart,
-      products: [...cart.products.filter((order) => order._id !== id)],
-    };
-    setCart(newCart);
-
-    const token = localStorage.getItem('JWT_TOKEN');
-    const config = {
-      headers: { 'x-auth-token': token as string },
-    };
-
-    try {
-      const { data } = await api.put('/carts/', newCart, config);
+      const { data } = await api.put('/carts', newCart, config);
       setCart(data);
     } catch (e) {
       setCart(oldCart);
@@ -153,14 +102,9 @@ export function ContextProvider({
     };
     setCart(newCart);
 
-    const token = localStorage.getItem('JWT_TOKEN');
-    const config = {
-      headers: { 'x-auth-token': token as string },
-    };
-
     try {
-      const { data } = await api.put('/carts', newCart, config);
-      setCart(data);
+      const config = getConfig();
+      await api.put('/carts', newCart, config);
     } catch (e) {
       setCart(oldCart);
     }
@@ -168,11 +112,7 @@ export function ContextProvider({
 
   const checkout = async (ordersInput: RealOrderType[]) => {
     if (!user || !cart) return;
-
-    const token = localStorage.getItem('JWT_TOKEN');
-    const config = {
-      headers: { 'x-auth-token': token as string },
-    };
+    const config = getConfig();
 
     const oldCart = { ...cart };
     const newCart = {
@@ -181,8 +121,7 @@ export function ContextProvider({
     };
     setCart(newCart);
     try {
-      const { data } = await api.put('/carts', newCart, config);
-      setCart(data);
+      await api.put('/carts', newCart, config);
     } catch (e) {
       setCart(oldCart);
     }
@@ -190,7 +129,6 @@ export function ContextProvider({
     const oldOrders = [...orders];
     const newOrders = [...orders, ...ordersInput];
     setOrders(newOrders);
-
     try {
       for (let order of ordersInput) await api.post('/orders', order, config);
       const { data } = await api.get(`/orders/${user._id}`, config);
@@ -200,62 +138,8 @@ export function ContextProvider({
     }
   };
 
-  const cancelOrder = async (id: string) => {
-    const token = localStorage.getItem('JWT_TOKEN');
-    const config = {
-      headers: { 'x-auth-token': token as string },
-    };
-
-    const oldOrders = [...orders];
-    const newOrders = orders.filter((order) => order._id !== id);
-    setOrders(newOrders);
-
-    try {
-      await api.delete(`/orders/${id}`, config);
-    } catch (e) {
-      setOrders(oldOrders);
-    }
-  };
-
-  const deleteCategory = async (id: string) => {
-    const token = localStorage.getItem('JWT_TOKEN');
-    const config = {
-      headers: { 'x-auth-token': token as string },
-    };
-
-    const oldCategories = [...categories];
-    const newCategories = categories.filter((cat) => cat._id !== id);
-    setCategories(newCategories);
-
-    try {
-      await api.delete(`/categories/${id}`, config);
-    } catch (e) {
-      setCategories(oldCategories);
-    }
-  };
-
-  const deleteBrand = async (id: string) => {
-    const token = localStorage.getItem('JWT_TOKEN');
-    const config = {
-      headers: { 'x-auth-token': token as string },
-    };
-
-    const oldBrands = [...brands];
-    const newBrands = brands.filter((brand) => brand._id !== id);
-    setBrands(newBrands);
-
-    try {
-      await api.delete(`/brands/${id}`, config);
-    } catch (e) {
-      setBrands(oldBrands);
-    }
-  };
-
   const addCategory = async (name: string) => {
-    const token = localStorage.getItem('JWT_TOKEN');
-    const config = {
-      headers: { 'x-auth-token': token as string },
-    };
+    const config = getConfig();
     const { data: newCategory } = await api.post(
       '/categories',
       { name },
@@ -265,45 +149,19 @@ export function ContextProvider({
   };
 
   const addBrand = async (name: string) => {
-    const token = localStorage.getItem('JWT_TOKEN');
-    const config = {
-      headers: { 'x-auth-token': token as string },
-    };
+    const config = getConfig();
     const { data: newBrand } = await api.post('/brands', { name }, config);
     setBrands((brands) => [...brands, newBrand]);
   };
 
-  const deleteProduct = async (id: string) => {
-    const token = localStorage.getItem('JWT_TOKEN');
-    const config = {
-      headers: { 'x-auth-token': token as string },
-    };
-
-    const oldProducts = [...products];
-    const newProducts = products.filter((product) => product._id !== id);
-    setProducts(newProducts);
-
-    try {
-      await api.delete(`/products/${id}`, config);
-    } catch (e) {
-      setProducts(oldProducts);
-    }
-  };
-
   const addProduct = async (product: ProductType) => {
-    const token = localStorage.getItem('JWT_TOKEN');
-    const config = {
-      headers: { 'x-auth-token': token as string },
-    };
+    const config = getConfig();
     const { data: newProduct } = await api.post('/products', product, config);
     setProducts((products) => [...products, newProduct]);
   };
 
   const editProduct = async (product: ProductType) => {
-    const token = localStorage.getItem('JWT_TOKEN');
-    const config = {
-      headers: { 'x-auth-token': token as string },
-    };
+    const config = getConfig();
     const { data: newProduct } = await api.put(
       `/products/${product._id}`,
       product,
@@ -315,22 +173,6 @@ export function ContextProvider({
     ]);
   };
 
-  const resolveOrder = async (id: string) => {
-    const token = localStorage.getItem('JWT_TOKEN');
-    const config = {
-      headers: { 'x-auth-token': token as string },
-    };
-    const oldOrders = [...allOrders];
-    const newOrders = allOrders.filter((order) => order._id !== id);
-    setAllOrders(newOrders);
-
-    try {
-      await api.delete(`/orders/${id}`, config);
-    } catch (e) {
-      setAllOrders(oldOrders);
-    }
-  };
-
   useEffect(() => {
     const resizeHandler = () => setIsWindowOver900(window.innerWidth >= 999);
     window.addEventListener<'resize'>('resize', resizeHandler);
@@ -339,42 +181,97 @@ export function ContextProvider({
 
   useEffect(() => {
     setUser(getUser());
-    (async () => {
-      const { data: products } = await api.get('/products');
-      const { data: categories } = await api.get('/categories');
-      const { data: brands } = await api.get('/brands');
-      setProducts(products);
-      setCategories(categories);
-      setBrands(brands);
-    })();
+    const func = async () => {
+      try {
+        const { data: products } = await api.get('/products');
+        setProducts(products);
+      } catch (e) {
+        func();
+      }
+    };
+    func();
+  }, []);
+
+  useEffect(() => {
+    setUser(getUser());
+    const func = async () => {
+      try {
+        const { data: categories } = await api.get('/categories');
+        setCategories(categories);
+      } catch (e) {
+        func();
+      }
+    };
+    func();
+  }, []);
+
+  useEffect(() => {
+    setUser(getUser());
+    const func = async () => {
+      try {
+        const { data: brands } = await api.get('/brands');
+        setBrands(brands);
+      } catch (e) {
+        func();
+      }
+    };
+    func();
   }, []);
 
   useEffect(() => {
     if (!user || (user && user.isAdmin)) return;
-    (async () => {
-      const token = localStorage.getItem('JWT_TOKEN');
-      const config = {
-        headers: { 'x-auth-token': token as string },
-      };
-      const { data: cart } = await api.get(`/carts/${user._id}`, config);
-      const { data: orders } = await api.get(`/orders/${user._id}`, config);
-      setCart(cart);
-      setOrders(orders);
-    })();
+    const func = async () => {
+      try {
+        const config = getConfig();
+        const { data: cart } = await api.get(`/carts/${user._id}`, config);
+        setCart(cart);
+      } catch (e) {
+        func();
+      }
+    };
+    func();
+  }, [user]);
+
+  useEffect(() => {
+    if (!user || (user && user.isAdmin)) return;
+    const func = async () => {
+      try {
+        const config = getConfig();
+        const { data: orders } = await api.get(`/orders/${user._id}`, config);
+        setOrders(orders);
+      } catch (e) {
+        func();
+      }
+    };
+    func();
   }, [user]);
 
   useEffect(() => {
     if (!user || !user.isAdmin) return;
-    (async () => {
-      const token = localStorage.getItem('JWT_TOKEN');
-      const config = {
-        headers: { 'x-auth-token': token as string },
-      };
-      const { data: orders } = await api.get('/orders', config);
-      const { data: emails } = await api.get('/emails', config);
-      setAllOrders(orders);
-      setAllEmails(emails);
-    })();
+    const func = async () => {
+      try {
+        const config = getConfig();
+        const { data: orders } = await api.get('/orders', config);
+        setAllOrders(orders);
+      } catch (e) {
+        func();
+      }
+    };
+    func();
+  }, [user]);
+
+  useEffect(() => {
+    if (!user || !user.isAdmin) return;
+    const func = async () => {
+      try {
+        const config = getConfig();
+        const { data: emails } = await api.get('/emails', config);
+        setAllEmails(emails);
+      } catch (e) {
+        func();
+      }
+    };
+    func();
   }, [user]);
 
   return (
@@ -385,26 +282,25 @@ export function ContextProvider({
         brands,
         user,
         cart,
-        signUp,
         isWindowOver1000,
         addToCart,
-        deleteFromCart,
         clearCart,
         checkout,
         orders,
         logout,
-        cancelOrder,
-        deleteCategory,
-        deleteBrand,
         addCategory,
         addBrand,
-        deleteProduct,
         addProduct,
         editProduct,
         allEmails,
         allOrders,
-        resolveOrder,
-        login,
+        userSetter,
+        cartSetter,
+        ordersOfUserSetter,
+        allOrdersSetter,
+        brandsSetter,
+        categoriesSetter,
+        productsSetter,
       }}
     >
       {children}

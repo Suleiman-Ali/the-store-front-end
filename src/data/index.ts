@@ -1,5 +1,4 @@
 import jwtDecode from 'jwt-decode';
-import Product from '../components/pages/Product/Product';
 
 export type EmailType = {
   date?: string;
@@ -70,6 +69,15 @@ export function getUser() {
   const token = localStorage.getItem('JWT_TOKEN');
   if (token) return jwtDecode<UserType>(token);
   return undefined;
+}
+
+export function getConfig() {
+  const token = localStorage.getItem('JWT_TOKEN');
+  if (!token) return;
+  const config = {
+    headers: { 'x-auth-token': token as string },
+  };
+  return config;
 }
 
 export function getUserTo(user: UserType | undefined) {

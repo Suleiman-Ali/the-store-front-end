@@ -2,8 +2,11 @@ import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Context from '../context';
 
-function Featured(): JSX.Element {
+function Featured(): JSX.Element | null {
   const { products, categories } = useContext(Context);
+
+  if (!(products.length >= 3)) return null;
+
   const threeProducts =
     categories.length >= 3
       ? [

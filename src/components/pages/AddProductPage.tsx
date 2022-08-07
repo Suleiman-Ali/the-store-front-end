@@ -1,13 +1,13 @@
-import { FormEventHandler, MutableRefObject, useContext, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Context from '../../context';
-import { ProductType } from '../../data';
 import AddButton from '../AddButton';
 import Footer from '../Footer';
 import InputReffed from '../InputReffed';
 import Navbar from '../Navbar';
 import SelectReffed from '../SelectReffed';
 import TextareaReffed from '../TextareaReffed';
+import { FormEventHandler, MutableRefObject, useContext, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ProductType } from '../../data';
 
 function AddProductPage(): JSX.Element {
   const { brands, categories, addProduct } = useContext(Context);

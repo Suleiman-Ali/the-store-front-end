@@ -1,4 +1,4 @@
-import React from 'react';
+import { forwardRef } from 'react';
 import { CategoryType, BrandType } from '../data';
 
 interface SelectedReffedProps {
@@ -6,7 +6,7 @@ interface SelectedReffedProps {
   items: CategoryType[] | BrandType[];
 }
 
-const SelectReffed = React.forwardRef<HTMLSelectElement, SelectedReffedProps>(
+const SelectReffed = forwardRef<HTMLSelectElement, SelectedReffedProps>(
   (props, ref) => {
     return (
       <div className="add__formBox">

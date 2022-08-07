@@ -1,5 +1,3 @@
-import { useContext } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Context from '../context';
 import AboutPage from './pages/AboutPage';
 import AddBrandPage from './pages/AddBrandPage';
@@ -16,6 +14,8 @@ import ProductPage from './pages/ProductPage';
 import ProductsPage from './pages/ProductsPage';
 import SignUpPage from './pages/SignUpPage';
 import UserPage from './pages/UserPage';
+import { useContext } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
   const { user } = useContext(Context);

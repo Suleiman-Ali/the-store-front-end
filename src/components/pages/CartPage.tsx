@@ -1,10 +1,10 @@
-import { MutableRefObject, useContext, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import api from '../../api';
 import Context from '../../context';
-import { getConfig } from '../../data';
 import Footer from '../Footer';
 import Navbar from '../Navbar';
+import { MutableRefObject, useContext, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getConfig } from '../../data';
 
 function CartPage(): JSX.Element | null {
   const { user, cart, clearCart, checkout, cartSetter } = useContext(Context);

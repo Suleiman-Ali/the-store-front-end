@@ -1,4 +1,4 @@
-import React, { FormEvent, FormEventHandler } from 'react';
+import { FormEvent } from 'react';
 
 interface InputChangeProps {
   text: string;

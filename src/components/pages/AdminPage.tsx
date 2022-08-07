@@ -1,10 +1,10 @@
-import { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Context from '../../context';
 import Emails from '../Emails';
 import Footer from '../Footer';
 import Navbar from '../Navbar';
 import Orders from '../Orders';
+import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function AdminPage(): JSX.Element {
   const navigate = useNavigate();

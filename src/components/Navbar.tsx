@@ -1,6 +1,6 @@
+import Context from '../context';
 import { useContext, useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import Context from '../context';
 import { getUserTo } from '../data';
 
 function Navbar(): JSX.Element {

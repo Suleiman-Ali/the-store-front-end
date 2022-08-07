@@ -1,12 +1,12 @@
-import { FormEventHandler, MutableRefObject, useRef, useState } from 'react';
 import api from '../../api';
-import { getConfig } from '../../data';
 import ErrorMessage from '../ErrorMessage';
 import Footer from '../Footer';
 import InputReffed from '../InputReffed';
 import Navbar from '../Navbar';
 import SuccessMessage from '../SuccessMessage';
 import TextareaReffed from '../TextareaReffed';
+import { FormEventHandler, MutableRefObject, useRef, useState } from 'react';
+import { getConfig } from '../../data';
 
 function ContactUsPage(): JSX.Element {
   const title = useRef() as MutableRefObject<HTMLInputElement>;

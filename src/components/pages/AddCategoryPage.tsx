@@ -1,10 +1,10 @@
-import { MutableRefObject, useContext, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Context from '../../context';
 import AddButton from '../AddButton';
 import Footer from '../Footer';
 import InputReffed from '../InputReffed';
 import Navbar from '../Navbar';
+import { MutableRefObject, useContext, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function AddCategoryPage(): JSX.Element {
   const { addCategory } = useContext(Context);

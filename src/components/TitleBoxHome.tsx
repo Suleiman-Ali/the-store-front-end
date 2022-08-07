@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
 import HeroImg from '../images/hero.jpeg';
+import { Link } from 'react-router-dom';
 
 function TitleBox(): JSX.Element {
   return (

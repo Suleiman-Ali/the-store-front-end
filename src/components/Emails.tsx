@@ -1,6 +1,6 @@
-import { useContext } from 'react';
 import Context from '../context';
 import Email from './Email';
+import { useContext } from 'react';
 
 function Emails(): JSX.Element {
   const { allEmails } = useContext(Context);

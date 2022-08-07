@@ -1,7 +1,6 @@
-import { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
 import api from '../api';
 import Context from '../context';
+import { useContext, useState } from 'react';
 import { getConfig, ProductType } from '../data';
 
 import ProductItem from './ProductItem';

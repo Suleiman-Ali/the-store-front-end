@@ -1,9 +1,9 @@
-import { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
 import api from '../api';
 import Context from '../context';
-import { getConfig } from '../data';
 import EditItem from './EditItem';
+import { getConfig } from '../data';
+import { useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 interface EditsProps {
   keyword: string;

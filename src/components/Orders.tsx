@@ -1,6 +1,6 @@
-import { useContext, useState } from 'react';
 import api from '../api';
 import Context from '../context';
+import { useContext, useState } from 'react';
 import { getConfig } from '../data';
 
 function Orders(): JSX.Element {

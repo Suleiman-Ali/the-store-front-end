@@ -1,4 +1,4 @@
-import React from 'react';
+import { forwardRef } from 'react';
 
 interface InputReffedTypes {
   text: string;
@@ -9,7 +9,7 @@ interface InputReffedTypes {
   min?: number;
 }
 
-const InputReffed = React.forwardRef<HTMLInputElement, InputReffedTypes>(
+const InputReffed = forwardRef<HTMLInputElement, InputReffedTypes>(
   (props, ref) => {
     return (
       <div className="add__formBox">

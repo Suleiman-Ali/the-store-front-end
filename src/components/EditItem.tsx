@@ -1,5 +1,5 @@
-import { useContext } from 'react';
 import Context from '../context';
+import { useContext } from 'react';
 import { BrandType, CategoryType } from '../data';
 
 interface EditItemProps {

@@ -1,11 +1,11 @@
-import { FormEventHandler, useContext, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
 import Context from '../../context';
-import { ProductType } from '../../data';
 import Footer from '../Footer';
 import InputChange from '../InputChange';
 import Navbar from '../Navbar';
 import TextareaChange from '../TextareaChange';
+import { FormEventHandler, useContext, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { ProductType } from '../../data';
 
 function EditProductPage(): JSX.Element {
   const { brands, categories, editProduct } = useContext(Context);

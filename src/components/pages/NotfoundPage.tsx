@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
 import Footer from '../Footer';
 import Navbar from '../Navbar';
+import { Link } from 'react-router-dom';
 
 function NotfoundPage(): JSX.Element {
   return (

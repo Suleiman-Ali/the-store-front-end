@@ -1,5 +1,8 @@
 import { createContext, ReactNode, useEffect, useState } from 'react';
 import {
+  products as InitialProducts,
+  categories as InitialCategories,
+  brands as InitialBrands,
   BrandType,
   CartType,
   CategoryType,
@@ -53,9 +56,10 @@ export function ContextProvider({
   const [isWindowOver1000, setIsWindowOver900] = useState<boolean>(
     window.innerWidth >= 999
   );
-  const [products, setProducts] = useState<ProductType[]>([]);
-  const [categories, setCategories] = useState<CategoryType[]>([]);
-  const [brands, setBrands] = useState<BrandType[]>([]);
+  const [products, setProducts] = useState<ProductType[]>(InitialProducts);
+  const [categories, setCategories] =
+    useState<CategoryType[]>(InitialCategories);
+  const [brands, setBrands] = useState<BrandType[]>(InitialBrands);
   const [orders, setOrders] = useState<RealOrderType[]>([]);
   const [allOrders, setAllOrders] = useState<RealOrderType[]>([]);
   const [allEmails, setAllEmails] = useState<EmailType[]>([]);

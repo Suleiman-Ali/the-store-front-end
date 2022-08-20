@@ -187,34 +187,14 @@ export function ContextProvider({
     setUser(getUser());
     const func = async () => {
       try {
-        const { data: products } = await api.get('/products');
-        setProducts(products);
-      } catch (e) {
-        func();
-      }
-    };
-    func();
-  }, []);
-
-  useEffect(() => {
-    setUser(getUser());
-    const func = async () => {
-      try {
-        const { data: categories } = await api.get('/categories');
-        setCategories(categories);
-      } catch (e) {
-        func();
-      }
-    };
-    func();
-  }, []);
-
-  useEffect(() => {
-    setUser(getUser());
-    const func = async () => {
-      try {
-        const { data: brands } = await api.get('/brands');
-        setBrands(brands);
+        const allData = await Promise.all([
+          api.get('/products'),
+          api.get('/categories'),
+          api.get('/brands'),
+        ]);
+        setProducts(allData[0].data);
+        setCategories(allData[1].data);
+        setBrands(allData[2].data);
       } catch (e) {
         func();
       }
@@ -224,25 +204,15 @@ export function ContextProvider({
 
   useEffect(() => {
     if (!user || (user && user.isAdmin)) return;
+    const config = getConfig();
     const func = async () => {
       try {
-        const config = getConfig();
-        const { data: cart } = await api.get(`/carts/${user._id}`, config);
-        setCart(cart);
-      } catch (e) {
-        func();
-      }
-    };
-    func();
-  }, [user]);
-
-  useEffect(() => {
-    if (!user || (user && user.isAdmin)) return;
-    const func = async () => {
-      try {
-        const config = getConfig();
-        const { data: orders } = await api.get(`/orders/${user._id}`, config);
-        setOrders(orders);
+        const allData = await Promise.all([
+          api.get(`/carts/${user._id}`, config),
+          api.get(`/orders/${user._id}`, config),
+        ]);
+        setCart(allData[0].data);
+        setOrders(allData[1].data);
       } catch (e) {
         func();
       }
@@ -252,25 +222,15 @@ export function ContextProvider({
 
   useEffect(() => {
     if (!user || !user.isAdmin) return;
+    const config = getConfig();
     const func = async () => {
       try {
-        const config = getConfig();
-        const { data: orders } = await api.get('/orders', config);
-        setAllOrders(orders);
-      } catch (e) {
-        func();
-      }
-    };
-    func();
-  }, [user]);
-
-  useEffect(() => {
-    if (!user || !user.isAdmin) return;
-    const func = async () => {
-      try {
-        const config = getConfig();
-        const { data: emails } = await api.get('/emails', config);
-        setAllEmails(emails);
+        const allData = await Promise.all([
+          api.get('/orders', config),
+          api.get('/emails', config),
+        ]);
+        setAllOrders(allData[0].data);
+        setAllEmails(allData[1].data);
       } catch (e) {
         func();
       }

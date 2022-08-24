@@ -1,6 +1,6 @@
 # The Store 🛒
 
-The Store is an online store where users can do online shopping.
+The Store is an online store where users can find a variety of products and purchase them.
 
 ![Alt text](./site-homepage-image.png)
 ![Alt text](./site-productspage-adminmode-image.png)
